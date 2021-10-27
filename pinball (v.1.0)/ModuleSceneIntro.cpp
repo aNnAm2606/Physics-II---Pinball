@@ -329,6 +329,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	// Ball update
+	// If ball falls off the screen, respawn in position and lives--
 	int ballY = METERS_TO_PIXELS(ball->body->GetPosition().y);
 	if (ballY >= SCREEN_HEIGHT)
 	{
@@ -337,6 +338,7 @@ update_status ModuleSceneIntro::Update()
 		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), ball->body->GetAngle());
 	}
 
+	// kicker logic
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		if (boost_ball) {
 			boost_timer += App->deltaTime * boost_addspeed;
