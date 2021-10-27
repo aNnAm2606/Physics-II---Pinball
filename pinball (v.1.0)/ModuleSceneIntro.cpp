@@ -33,6 +33,28 @@ bool ModuleSceneIntro::Start()
 
 	/*sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50, false);*/
 
+	//Draw map colliders
+	App->physics->CreateRectangle(199, 199, 56, 9, false);
+	App->physics->CreateRectangle(74, 242, 31, 9, false);
+	App->physics->CreateRectangle(313, 240, 31, 9, false);
+	App->physics->CreateRectangle(313, 240, 31, 9, false);
+	App->physics->CreateRectangle(74, 336, 19, 180, false);
+	App->physics->CreateRectangle(312, 332, 19, 180, false);
+	App->physics->CreateRectangle(312, 332, 19, 180, false);
+	App->physics->CreateRectangle(227, 403, 37, 7, false);
+	App->physics->CreateRectangle(103, 310, 26, 5, false);
+	App->physics->CreateRectangle(284, 306, 26, 5, false);
+	App->physics->CreateRectangle(134, 73, 26, 5, false);
+	App->physics->CreateRectangle(204, 72, 26, 5, false);
+	App->physics->CreateRectangle(268, 73, 26, 5, false);
+	
+	App->physics->CreateCircle(135, 62, 12, false);
+	App->physics->CreateCircle(204, 62, 12, false);
+	App->physics->CreateCircle(269, 62, 12, false);
+	App->physics->CreateCircle(102, 299, 12, false);
+	App->physics->CreateCircle(284, 295, 12, false);
+
+
 	return ret;
 }
 
@@ -119,6 +141,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
+
 		// Pivot 0, 0
 		int rick_head[64] = {
 			14, 36,
