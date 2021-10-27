@@ -33,26 +33,54 @@ bool ModuleSceneIntro::Start()
 
 	/*sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50, false);*/
 
+	// Draw walls
+	int background[48] = {211, 667,
+		211, 557,
+		355, 437,
+		356, 100,
+		365, 89,
+		386, 101,
+		386, 580,
+		431, 580,
+		433, 106,
+		422, 73,
+		394, 46,
+		339, 30,
+		139, 29,
+		96, 44,
+		65, 68,
+		41, 105,
+		31, 130,
+		32, 438,
+		173, 557,
+		173, 666,
+		0, 666,
+		0, 0,
+		499, 0,
+		499, 666
+	};
+
+	App->physics->CreateChain(0, 0, background, 48, 1);
 	//Draw map colliders
-	App->physics->CreateRectangle(199, 199, 56, 9, false);
-	App->physics->CreateRectangle(74, 242, 31, 9, false);
-	App->physics->CreateRectangle(313, 240, 31, 9, false);
-	App->physics->CreateRectangle(313, 240, 31, 9, false);
-	App->physics->CreateRectangle(74, 336, 19, 180, false);
-	App->physics->CreateRectangle(312, 332, 19, 180, false);
-	App->physics->CreateRectangle(312, 332, 19, 180, false);
-	App->physics->CreateRectangle(227, 403, 37, 7, false);
-	App->physics->CreateRectangle(103, 310, 26, 5, false);
-	App->physics->CreateRectangle(284, 306, 26, 5, false);
-	App->physics->CreateRectangle(134, 73, 26, 5, false);
-	App->physics->CreateRectangle(204, 72, 26, 5, false);
-	App->physics->CreateRectangle(268, 73, 26, 5, false);
+	App->physics->CreateRectangle(199, 199, 56, 9, 1);
+	App->physics->CreateRectangle(74, 242, 31, 9, 1);
+	App->physics->CreateRectangle(313, 240, 31, 9, 1);
+	App->physics->CreateRectangle(313, 240, 31, 9, 1);
+	App->physics->CreateRectangle(74, 336, 19, 180, 1);
+	App->physics->CreateRectangle(312, 332, 19, 180, 1);
+	App->physics->CreateRectangle(312, 332, 19, 180, 1);
+	App->physics->CreateRectangle(227, 403, 37, 7, 1);
+	App->physics->CreateRectangle(103, 310, 26, 5, 1);
+	App->physics->CreateRectangle(284, 306, 26, 5, 1);
+	App->physics->CreateRectangle(134, 73, 26, 5, 1);
+	App->physics->CreateRectangle(204, 72, 26, 5, 1);
+	App->physics->CreateRectangle(268, 73, 26, 5, 1);
 	
-	App->physics->CreateCircle(135, 62, 12, false);
-	App->physics->CreateCircle(204, 62, 12, false);
-	App->physics->CreateCircle(269, 62, 12, false);
-	App->physics->CreateCircle(102, 299, 12, false);
-	App->physics->CreateCircle(284, 295, 12, false);
+	App->physics->CreateCircle(135, 62, 12, 1);
+	App->physics->CreateCircle(204, 62, 12, 1);
+	App->physics->CreateCircle(269, 62, 12, 1);
+	App->physics->CreateCircle(102, 299, 12, 1);
+	App->physics->CreateCircle(284, 295, 12, 1);
 
 
 	return ret;
@@ -70,56 +98,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	App->renderer->Blit(background, 0, 0, NULL);
-	
-	//wall bounds coordinates
-	int background[88] = {
-	434, 561,
-	433, 106,
-	422, 70,
-	377, 35,
-	336, 30,
-	167, 29,
-	130, 34,
-	98, 43,
-	73, 60,
-	51, 86,
-	40, 106,
-	31, 130,
-	32, 438,
-	169, 555,
-	169, 567,
-	24, 444,
-	22, 124,
-	34, 95,
-	46, 75,
-	71, 47,
-	106, 29,
-	140, 19,
-	166, 18,
-	346, 20,
-	385, 25,
-	410, 42,
-	432, 62,
-	442, 100,
-	443, 579,
-	377, 579,
-	376, 107,
-	369, 93,
-	361, 93,
-	360, 444,
-	216, 569,
-	213, 556,
-	354, 439,
-	356, 101,
-	358, 89,
-	369, 88,
-	378, 92,
-	388, 102,
-	392, 117,
-	392, 561
-	};
 
-	App->physics->CreateChain(0, 0, background, 88, false);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -130,13 +109,13 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15, true));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15, 0));
 		circles.getLast()->data->listener = this;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, true));
+		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, 0));
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -178,7 +157,7 @@ update_status ModuleSceneIntro::Update()
 			30, 62
 		};
 
-		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, true));
+		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
 	}
 
 	// Prepare for raycast ------------------------------------------------------
