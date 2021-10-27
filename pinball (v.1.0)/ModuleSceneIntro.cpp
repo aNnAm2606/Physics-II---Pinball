@@ -136,7 +136,8 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcher, 16, 1);
+	wallFlickerL = App->physics->CreateChain(0, 0, scratcher, 16, 1);
+	/*wallFlickerL_p*/
 
 	int scratcher2[16] = {
 	302, 416,
@@ -148,7 +149,7 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
+	wallFlickerR = App->physics->CreateChain(0, 0, scratcher2, 16, 1);
 
 	// flickers
 	int flickerL[14] = {
@@ -160,7 +161,7 @@ bool ModuleSceneIntro::Start()
 		169, 512,
 		106, 462
 	};
-	App->physics->CreateChain(0, 0, flickerL, 14, 1);
+	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 14, 1);
 
 	int flickerR[14] = {
 	270, 450,
@@ -171,12 +172,10 @@ bool ModuleSceneIntro::Start()
 	218, 514,
 	279, 459
 	};
-	App->physics->CreateChain(0, 0, flickerR, 14, 1);
 
-	b2RevoluteJointDef revoluteJointDef;
-	revoluteJointDef.bodyA = scratcher;
-	revoluteJointDef.bodyB = flickerL;
-	revoluteJointDef.collideConnected = false;
+	flickerRight = App->physics->CreateChain(0, 0, flickerR, 14, 1);
+
+	/*App->physics->CreateRevoluteJoint(wallFlickerL,)*/
 	return ret;
 }
 
