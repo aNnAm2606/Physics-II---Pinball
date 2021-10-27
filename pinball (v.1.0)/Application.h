@@ -29,6 +29,11 @@ private:
 
 	p2List<Module*> list_modules;
 
+	unsigned int
+		lastTime,
+		currentTime;
+	float msFrame;
+
 public:
 
 	Application();
@@ -38,6 +43,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	float deltaTime;
 private:
 
 	void AddModule(Module* mod);

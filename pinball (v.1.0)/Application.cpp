@@ -75,6 +75,11 @@ bool Application::Init()
 			ret = item->data->Start();
 		item = item->next;
 	}
+
+	deltaTime = 0.0f;
+	lastTime = 0;
+
+	msFrame = 1.0f / FPS;
 	
 	return ret;
 }
@@ -109,6 +114,17 @@ update_status Application::Update()
 			ret = item->data->PostUpdate();
 		item = item->next;
 	}
+
+	// FPS Control
+	currentTime = SDL_GetTicks();
+
+	deltaTime = (currentTime - lastTime) / 1000.0f;
+
+	if (deltaTime < msFrame) {
+		SDL_Delay(msFrame - deltaTime);
+	}
+
+	lastTime = SDL_GetTicks();
 
 	return ret;
 }
