@@ -97,11 +97,11 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRectangle(204, 72, 26, 5, 1);
 	App->physics->CreateRectangle(268, 73, 26, 5, 1);
 	
-	App->physics->CreateCircle(135, 62, 12, 1);
-	App->physics->CreateCircle(204, 62, 12, 1);
-	App->physics->CreateCircle(269, 62, 12, 1);
-	App->physics->CreateCircle(102, 299, 12, 1);
-	App->physics->CreateCircle(284, 295, 12, 1);
+	App->physics->CreateCircleSensor(135, 62, 12, 1);
+	App->physics->CreateCircleSensor(204, 62, 12, 1);
+	App->physics->CreateCircleSensor(269, 62, 12, 1);
+	App->physics->CreateCircleSensor(102, 299, 12, 1);
+	App->physics->CreateCircleSensor(284, 295, 12, 1);
 
 	int milkbox[14] = {
 	52, 150,
@@ -149,7 +149,12 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
+<<<<<<< HEAD
 	App->physics->CreateChain(0, 0, scratcher, 16, 1);
+=======
+	wallFlickerL = App->physics->CreateChain(0, 0, scratcher, 16, 1);
+	/*wallFlickerL_p*/
+>>>>>>> 34478b810fc33bf5dd209bda783deffbbeb0ab60
 
 	int scratcher2[16] = {
 	302, 416,
@@ -161,9 +166,37 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
+<<<<<<< HEAD
 	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
+=======
+	wallFlickerR = App->physics->CreateChain(0, 0, scratcher2, 16, 1);
 
+	// flickers
+	int flickerL[14] = {
+		116, 453,
+		160, 486,
+		169, 487,
+		176, 493,
+		178, 502,
+		169, 512,
+		106, 462
+	};
+	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 14, 1);
 
+	int flickerR[14] = {
+	270, 450,
+	225, 490,
+	217, 490,
+	210, 496,
+	208, 504,
+	218, 514,
+	279, 459
+	};
+>>>>>>> 34478b810fc33bf5dd209bda783deffbbeb0ab60
+
+	flickerRight = App->physics->CreateChain(0, 0, flickerR, 14, 1);
+
+	/*App->physics->CreateRevoluteJoint(wallFlickerL,)*/
 	return ret;
 }
 
@@ -181,6 +214,7 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(background, 0, 0, NULL);
 
 
+<<<<<<< HEAD
 	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	//{
 	//	ray_on = !ray_on;
@@ -240,6 +274,67 @@ update_status ModuleSceneIntro::Update()
 
 	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
 	//}
+=======
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		ray_on = !ray_on;
+		ray.x = App->input->GetMouseX();
+		ray.y = App->input->GetMouseY();
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0));
+		circles.getLast()->data->listener = this;
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, 0));
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+
+		// Pivot 0, 0
+		int rick_head[64] = {
+			14, 36,
+			42, 40,
+			40, 0,
+			75, 30,
+			88, 4,
+			94, 39,
+			111, 36,
+			104, 58,
+			107, 62,
+			117, 67,
+			109, 73,
+			110, 85,
+			106, 91,
+			109, 99,
+			103, 104,
+			100, 115,
+			106, 121,
+			103, 125,
+			98, 126,
+			95, 137,
+			83, 147,
+			67, 147,
+			53, 140,
+			46, 132,
+			34, 136,
+			38, 126,
+			23, 123,
+			30, 114,
+			10, 102,
+			29, 90,
+			0, 75,
+			30, 62
+		};
+
+		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
+	}
+>>>>>>> 34478b810fc33bf5dd209bda783deffbbeb0ab60
 
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -322,11 +417,19 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+<<<<<<< HEAD
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
 		if (boost_ball) {
 			boost_ball = false;
 			boost_strength = boost_init_strength;
+=======
+	if (App->input->GetKey(SDL_SCANCODE_DOWN))
+	{
+		if (boost_ball) 
+		{
+			boost_ball = false;
+>>>>>>> 34478b810fc33bf5dd209bda783deffbbeb0ab60
 			ball->body->ApplyForceToCenter(b2Vec2(0, -boost_strength), true);
 			kicker->body->SetTransform(b2Vec2(PIXEL_TO_METERS(kicker_init_position.x), PIXEL_TO_METERS(kicker_init_position.y)), kicker->body->GetAngle());
 		}
