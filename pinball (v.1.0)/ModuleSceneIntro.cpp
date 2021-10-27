@@ -54,6 +54,66 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateCircle(102, 299, 12, false);
 	App->physics->CreateCircle(284, 295, 12, false);
 
+	int milkbox[14] = {
+	52, 150,
+	65, 169,
+	81, 169,
+	104, 145,
+	109, 132,
+	116, 127,
+	99, 111
+	};
+	App->physics->CreateChain(0,0, milkbox, 14, false);
+
+	int milkbox2[14] = {
+	287, 112,
+	270, 125,
+	277, 130,
+	282, 144,
+	305, 169,
+	321, 169,
+	334, 154
+	};
+	App->physics->CreateChain(0, 0, milkbox2, 14, false);
+
+	int books[6] = {
+		83, 415,
+		133, 416,
+		85, 348
+	};
+	App->physics->CreateChain(0, 0, books, 6, false);
+
+	int books2[6] = {
+	300, 346,
+	251, 415,
+	300, 415
+	};
+	App->physics->CreateChain(0, 0, books2, 6, false);
+
+	int scratcher[16] = {
+	64, 425,
+	110, 466,
+	105, 469,
+	109, 475,
+	130, 455,
+	126, 452,
+	121, 456,
+	82, 418
+	};
+	App->physics->CreateChain(0, 0, scratcher, 16, false);
+
+	int scratcher2[16] = {
+	302, 416,
+	262, 455,
+	260, 450,
+	255, 453,
+	273, 473,
+	278, 469,
+	274, 466,
+	320, 424
+	};
+	App->physics->CreateChain(0, 0, scratcher2, 16, false);
+
 
 	return ret;
 }
