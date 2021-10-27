@@ -21,7 +21,7 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
-	p2List<PhysBody*> walls;
+	//p2List<PhysBody*> walls;
 
 	PhysBody* ball;
 	bool boost_ball;
@@ -30,6 +30,8 @@ public:
 	iPoint spawn_position;
 
 	PhysBody* sensor;
+	PhysBody* wallFlickerL;
+	PhysBody* wallFlickerR;
 	bool sensed;
 
 	int lifes;

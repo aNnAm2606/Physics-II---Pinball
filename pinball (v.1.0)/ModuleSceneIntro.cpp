@@ -136,7 +136,7 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcher, 16, 1);
+	wallFlickerL = App->physics->CreateChain(0, 0, scratcher, 16, 1);
 
 	int scratcher2[16] = {
 	302, 416,
@@ -148,7 +148,7 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
+	wallFlickerR = App->physics->CreateChain(0, 0, scratcher2, 16, 1);
 
 	// flickers
 	int flickerL[14] = {
@@ -172,6 +172,8 @@ bool ModuleSceneIntro::Start()
 	279, 459
 	};
 	App->physics->CreateChain(0, 0, flickerR, 14, 1);
+
+	/*App->physics->CreateRevoluteJoint(wallFlickerL,)*/
 
 	return ret;
 }
