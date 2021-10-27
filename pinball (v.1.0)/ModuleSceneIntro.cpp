@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	spawn_position = {415, 500};
 
-	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, true);
+	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 	ball->listener = this;
 
 	boost_ball = true;
@@ -99,7 +99,7 @@ bool ModuleSceneIntro::Start()
 	116, 127,
 	99, 111
 	};
-	App->physics->CreateChain(0,0, milkbox, 14, false);
+	App->physics->CreateChain(0,0, milkbox, 14, 1);
 
 	int milkbox2[14] = {
 	287, 112,
@@ -110,21 +110,21 @@ bool ModuleSceneIntro::Start()
 	321, 169,
 	334, 154
 	};
-	App->physics->CreateChain(0, 0, milkbox2, 14, false);
+	App->physics->CreateChain(0, 0, milkbox2, 14, 1);
 
 	int books[6] = {
 		83, 415,
 		133, 416,
 		85, 348
 	};
-	App->physics->CreateChain(0, 0, books, 6, false);
+	App->physics->CreateChain(0, 0, books, 6, 1);
 
 	int books2[6] = {
 	300, 346,
 	251, 415,
 	300, 415
 	};
-	App->physics->CreateChain(0, 0, books2, 6, false);
+	App->physics->CreateChain(0, 0, books2, 6, 1);
 
 	int scratcher[16] = {
 	64, 425,
@@ -136,7 +136,7 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcher, 16, false);
+	App->physics->CreateChain(0, 0, scratcher, 16, 1);
 
 	int scratcher2[16] = {
 	302, 416,
@@ -148,7 +148,7 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcher2, 16, false);
+	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
 
 
 	return ret;
@@ -290,14 +290,19 @@ update_status ModuleSceneIntro::Update()
 
 	// Ball update
 	int ballY = METERS_TO_PIXELS(ball->body->GetPosition().y);
-	if (ballY >= SCREEN_HEIGHT) {
+	if (ballY >= SCREEN_HEIGHT)
+	{
+		boost_ball = true;
 		lifes--;
 		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), ball->body->GetAngle());
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
-		if (boost_ball) {
+	if (App->input->GetKey(SDL_SCANCODE_DOWN))
+	{
+		if (boost_ball) 
+		{
+			boost_ball = false;
 			ball->body->ApplyForceToCenter(b2Vec2(0, -boost_strength), true);
 		}
 	}
