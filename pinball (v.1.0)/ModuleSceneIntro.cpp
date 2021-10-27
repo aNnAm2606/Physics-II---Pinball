@@ -173,6 +173,10 @@ bool ModuleSceneIntro::Start()
 	};
 	App->physics->CreateChain(0, 0, flickerR, 14, 1);
 
+	b2RevoluteJointDef revoluteJointDef;
+	revoluteJointDef.bodyA = scratcher;
+	revoluteJointDef.bodyB = flickerL;
+	revoluteJointDef.collideConnected = false;
 	return ret;
 }
 
