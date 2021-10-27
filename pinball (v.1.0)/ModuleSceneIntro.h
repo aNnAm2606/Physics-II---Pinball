@@ -27,10 +27,12 @@ public:
 	bool boost_ball;
 	float boost_strength;
 
-	b2Vec2 spawn_position;
+	iPoint spawn_position;
 
 	PhysBody* sensor;
 	bool sensed;
+
+	int lifes;
 
 	SDL_Texture* circle;
 	SDL_Texture* box;

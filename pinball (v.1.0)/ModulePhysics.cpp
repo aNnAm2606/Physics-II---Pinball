@@ -59,7 +59,7 @@ bool ModulePhysics::Start()
 // 
 update_status ModulePhysics::PreUpdate()
 {
-	world->Step(1.0f / 60.0f, 6, 2);
+	world->Step(App->deltaTime, 6, 2);
 
 	for(b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{

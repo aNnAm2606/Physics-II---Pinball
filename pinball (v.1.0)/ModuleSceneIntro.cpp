@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	spawn_position = {415, 500};
 
-	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 11, true);
+	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, true);
 	ball->listener = this;
 
 	boost_ball = true;
@@ -250,7 +250,12 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	// Ball update
-	
+	int ballY = METERS_TO_PIXELS(ball->body->GetPosition().y);
+	if (ballY >= SCREEN_HEIGHT) {
+		lifes--;
+		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), ball->body->GetAngle());
+	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
 		if (boost_ball) {
