@@ -47,10 +47,10 @@ public:
 	PhysBody* flickerLeft;
 	PhysBody* flickerRight;
 
-	b2Vec2 wallFlickerL_p;
-	b2Vec2 wallFlickerR_p;
-	b2Vec2 flickerRight_p;
-	b2Vec2 flickerLeft_p;
+	//b2Vec2 wallFlickerL_p;
+	//b2Vec2 wallFlickerR_p;
+	//b2Vec2 flickerRight_p;
+	//b2Vec2 flickerLeft_p;
 
 	int lifes;
 
