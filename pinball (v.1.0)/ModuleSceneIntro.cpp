@@ -31,6 +31,14 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	background = App->textures->Load("pinball/background.png");
 
+	spawn_position = {415, 500};
+
+	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 11, true);
+	ball->listener = this;
+
+	boost_ball = true;
+	boost_strength = 50.0f;
+
 	/*sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50, false);*/
 
 	return ret;
@@ -216,6 +224,15 @@ update_status ModuleSceneIntro::Update()
 
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
+	}
+
+	// Ball update
+	
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
+		if (boost_ball) {
+			ball->body->ApplyForceToCenter(b2Vec2(0, -boost_strength), true);
+		}
 	}
 
 	return UPDATE_CONTINUE;
