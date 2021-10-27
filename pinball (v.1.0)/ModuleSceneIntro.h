@@ -23,6 +23,12 @@ public:
 	p2List<PhysBody*> ricks;
 	p2List<PhysBody*> walls;
 
+	PhysBody* ball;
+	bool boost_ball;
+	float boost_strength;
+
+	b2Vec2 spawn_position;
+
 	PhysBody* sensor;
 	bool sensed;
 
