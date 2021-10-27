@@ -84,11 +84,11 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRectangle(204, 72, 26, 5, 1);
 	App->physics->CreateRectangle(268, 73, 26, 5, 1);
 	
-	App->physics->CreateCircle(135, 62, 12, 1);
-	App->physics->CreateCircle(204, 62, 12, 1);
-	App->physics->CreateCircle(269, 62, 12, 1);
-	App->physics->CreateCircle(102, 299, 12, 1);
-	App->physics->CreateCircle(284, 295, 12, 1);
+	App->physics->CreateCircleSensor(135, 62, 12, 1);
+	App->physics->CreateCircleSensor(204, 62, 12, 1);
+	App->physics->CreateCircleSensor(269, 62, 12, 1);
+	App->physics->CreateCircleSensor(102, 299, 12, 1);
+	App->physics->CreateCircleSensor(284, 295, 12, 1);
 
 	int milkbox[14] = {
 	52, 150,
@@ -177,7 +177,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15, 0));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0));
 		circles.getLast()->data->listener = this;
 	}
 

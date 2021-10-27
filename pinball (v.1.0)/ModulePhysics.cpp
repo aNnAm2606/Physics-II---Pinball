@@ -215,6 +215,56 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius, int dynamic = 0)
+{
+	// Create BODY at position x,y
+	b2BodyDef body;
+	switch (dynamic)
+	{
+	case 0:
+		body.type = b2_dynamicBody;
+		break;
+
+	case 1:
+		body.type = b2_staticBody;
+		break;
+
+	case 2:
+		body.type = b2_kinematicBody;
+		break;
+	}
+
+	// Create SHAPE (small "box" rectangle is ok; otherwise create whatever you need)
+	b2CircleShape circle;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	// Add BODY to the world
+	b2Body* b = world->CreateBody(&body);
+
+	// Create SHAPE
+	circle.m_radius = PIXEL_TO_METERS(radius);
+
+	// Create FIXTURE
+	b2FixtureDef fixture;
+	fixture.shape = &circle;
+	fixture.density = 1.0f;
+	// Create FIXTURE
+
+	fixture.isSensor = true; // Set this fixture as SENSOR type
+
+	// Add fixture to the BODY
+	b->CreateFixture(&fixture);
+
+	// Create our custom PhysBody class
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	// Return our PhysBody class
+	return pbody;
+}
+
 PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, int dynamic = 0)
 {
 	// Create BODY at position x,y
