@@ -25,9 +25,19 @@ public:
 
 	PhysBody* ball;
 	bool boost_ball;
+	float boost_init_strength;
 	float boost_strength;
+	float boost_max_strength;
+
+	float boost_timer;
+	float boost_addspeed;
+	float boost_time;
 
 	iPoint spawn_position;
+
+	PhysBody* kicker;
+	iPoint kicker_init_position;
+	iPoint kicker_max_position;
 
 	PhysBody* sensor;
 	bool sensed;

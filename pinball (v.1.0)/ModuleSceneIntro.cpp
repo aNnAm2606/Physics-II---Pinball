@@ -7,6 +7,8 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
+#include <iostream>
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	circle = box = rick = NULL;
@@ -31,13 +33,24 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	background = App->textures->Load("pinball/background.png");
 
-	spawn_position = {415, 500};
+	spawn_position = {408, 500};
 
-	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, true);
+	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 	ball->listener = this;
 
+	kicker_init_position = { 408, 520 };
+	kicker_max_position = { 408,560 };
+
+	kicker = App->physics->CreateRectangle(kicker_init_position.x, kicker_init_position.y, 42, 10, 1);
+
 	boost_ball = true;
-	boost_strength = 50.0f;
+	boost_init_strength = 100.0f;
+	boost_strength = boost_init_strength;
+	boost_max_strength = 300.0f;
+
+	boost_timer = 0.0f;
+	boost_addspeed = 0.8f;
+	boost_time = 1.0f;
 
 	/*sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50, false);*/
 
@@ -99,7 +112,7 @@ bool ModuleSceneIntro::Start()
 	116, 127,
 	99, 111
 	};
-	App->physics->CreateChain(0,0, milkbox, 14, false);
+	App->physics->CreateChain(0,0, milkbox, 14, 1);
 
 	int milkbox2[14] = {
 	287, 112,
@@ -110,21 +123,21 @@ bool ModuleSceneIntro::Start()
 	321, 169,
 	334, 154
 	};
-	App->physics->CreateChain(0, 0, milkbox2, 14, false);
+	App->physics->CreateChain(0, 0, milkbox2, 14, 1);
 
 	int books[6] = {
 		83, 415,
 		133, 416,
 		85, 348
 	};
-	App->physics->CreateChain(0, 0, books, 6, false);
+	App->physics->CreateChain(0, 0, books, 6, 1);
 
 	int books2[6] = {
 	300, 346,
 	251, 415,
 	300, 415
 	};
-	App->physics->CreateChain(0, 0, books2, 6, false);
+	App->physics->CreateChain(0, 0, books2, 6, 1);
 
 	int scratcher[16] = {
 	64, 425,
@@ -136,7 +149,7 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcher, 16, false);
+	App->physics->CreateChain(0, 0, scratcher, 16, 1);
 
 	int scratcher2[16] = {
 	302, 416,
@@ -148,7 +161,7 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcher2, 16, false);
+	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
 
 
 	return ret;
@@ -168,65 +181,65 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(background, 0, 0, NULL);
 
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		ray_on = !ray_on;
-		ray.x = App->input->GetMouseX();
-		ray.y = App->input->GetMouseY();
-	}
+	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	//{
+	//	ray_on = !ray_on;
+	//	ray.x = App->input->GetMouseX();
+	//	ray.y = App->input->GetMouseY();
+	//}
 
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15, 0));
-		circles.getLast()->data->listener = this;
-	}
+	//if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	//{
+	//	circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15, 0));
+	//	circles.getLast()->data->listener = this;
+	//}
 
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, 0));
-	}
+	//if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	//{
+	//	boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, 0));
+	//}
 
-	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
+	//if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	//{
 
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
+	//	// Pivot 0, 0
+	//	int rick_head[64] = {
+	//		14, 36,
+	//		42, 40,
+	//		40, 0,
+	//		75, 30,
+	//		88, 4,
+	//		94, 39,
+	//		111, 36,
+	//		104, 58,
+	//		107, 62,
+	//		117, 67,
+	//		109, 73,
+	//		110, 85,
+	//		106, 91,
+	//		109, 99,
+	//		103, 104,
+	//		100, 115,
+	//		106, 121,
+	//		103, 125,
+	//		98, 126,
+	//		95, 137,
+	//		83, 147,
+	//		67, 147,
+	//		53, 140,
+	//		46, 132,
+	//		34, 136,
+	//		38, 126,
+	//		23, 123,
+	//		30, 114,
+	//		10, 102,
+	//		29, 90,
+	//		0, 75,
+	//		30, 62
+	//	};
 
-		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
-	}
+	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
+	//}
 
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -290,15 +303,43 @@ update_status ModuleSceneIntro::Update()
 
 	// Ball update
 	int ballY = METERS_TO_PIXELS(ball->body->GetPosition().y);
-	if (ballY >= SCREEN_HEIGHT) {
+	if (ballY >= SCREEN_HEIGHT)
+	{
+		boost_ball = true;
 		lifes--;
 		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), ball->body->GetAngle());
 	}
 
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		if (boost_ball) {
+			boost_timer += App->deltaTime * boost_addspeed;
+			boost_timer = CAP(boost_timer, 0.0f, boost_time);
+			boost_strength = LERP(boost_init_strength, boost_max_strength, boost_timer);
+			b2Vec2 kicker_pos = kicker->body->GetPosition();
+			int lerp = LERP(kicker_init_position.y, kicker_max_position.y, boost_timer);
+			kicker_pos.y = PIXEL_TO_METERS(lerp);
+			kicker->body->SetTransform(kicker_pos, kicker->body->GetAngle());
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		if (boost_ball) {
+			boost_ball = false;
+			boost_strength = boost_init_strength;
 			ball->body->ApplyForceToCenter(b2Vec2(0, -boost_strength), true);
+			kicker->body->SetTransform(b2Vec2(PIXEL_TO_METERS(kicker_init_position.x), PIXEL_TO_METERS(kicker_init_position.y)), kicker->body->GetAngle());
+		}
+	}
+
+	if (!boost_ball) {
+		if (boost_timer > 0.0f) {
+			boost_timer -= App->deltaTime * boost_addspeed * 8;
+			boost_timer = CAP(boost_timer, 0.0f, boost_time);
+			b2Vec2 kicker_pos = kicker->body->GetPosition();
+			int lerp = LERP(kicker_init_position.y, kicker_max_position.y, boost_timer);
+			kicker_pos.y = PIXEL_TO_METERS(lerp);
+			kicker->body->SetTransform(kicker_pos, kicker->body->GetAngle());
 		}
 	}
 
