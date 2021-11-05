@@ -139,7 +139,7 @@ bool ModuleSceneIntro::Start()
 	};
 	App->physics->CreateChain(0, 0, books2, 6, 1);
 
-	int scratcher[16] = {
+	int scratcherL[16] = {
 	64, 425,
 	110, 466,
 	105, 469,
@@ -149,11 +149,11 @@ bool ModuleSceneIntro::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcher, 16, 1);
-	wallFlickerL = App->physics->CreateChain(0, 0, scratcher, 16, 1);
+	App->physics->CreateChain(0, 0, scratcherL, 16, 1);
+	wallFlickerL = App->physics->CreateChain(0, 0, scratcherL, 16, 1);
 
 
-	int scratcher2[16] = {
+	int scratcherR[16] = {
 	302, 416,
 	262, 455,
 	260, 450,
@@ -163,8 +163,8 @@ bool ModuleSceneIntro::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcher2, 16, 1);
-	wallFlickerR = App->physics->CreateChain(0, 0, scratcher2, 16, 1);
+	App->physics->CreateChain(0, 0, scratcherR, 16, 1);
+	wallFlickerR = App->physics->CreateChain(0, 0, scratcherR, 16, 1);
 
 	// flickers
 	int flickerL[14] = {
@@ -176,10 +176,8 @@ bool ModuleSceneIntro::Start()
 		169, 512,
 		106, 462
 	};
-	App->physics->CreateChain(0, 0, flickerL, 14, 1);
-	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 14, 1);
-	/*flickerLeft_p.x = -36;
-	flickerLeft_p.y = -25;*/
+	
+	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 14, 0);
 
 	int flickerR[14] = {
 	270, 450,
@@ -196,9 +194,10 @@ bool ModuleSceneIntro::Start()
 	flickerRight_p.y = -4;*/
 
 	//Add kinematic fish
-
-
-	/*App->physics->CreateRevoluteJoint(wallFlickerL, (115, 462), flickerLeft, (115, 462), 0, false, true);*/
+	
+	//Create joint for flippers
+	circleJointL = App->physics->CreateCircle(120, 463, 4,1);
+	App->physics->CreateRevoluteJoint(flickerLeft, { 0, 0 }, circleJointL, { 0, 0 }, 0, true, true);
 	return ret;
 }
 
@@ -379,6 +378,12 @@ update_status ModuleSceneIntro::Update()
 			kicker->body->SetTransform(kicker_pos, kicker->body->GetAngle());
 		}
 	}
+
+	//FLICKER L
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+		flickerLeft->body->ApplyForce({40,0}, {0,0}, true);
+		}
 
 	return UPDATE_CONTINUE;
 }

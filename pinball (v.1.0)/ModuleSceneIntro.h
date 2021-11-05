@@ -46,6 +46,7 @@ public:
 	PhysBody* wallFlickerR;
 	PhysBody* flickerLeft;
 	PhysBody* flickerRight;
+	PhysBody* circleJointL;
 
 	/*b2Vec2 wallFlickerL_p;
 	b2Vec2 wallFlickerR_p;
