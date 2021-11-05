@@ -32,14 +32,14 @@ bool SceneIntro::Start()
 
 update_status SceneIntro::Update()
 {
+	// fade to black to game scene
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameScene, 90);
 	}
 
-	// Put images
-	App->renderer->Blit(Title, 0, 0, NULL);
-	App->renderer->Blit(bg1, 0, 0, NULL);
+	// Put images, example: App->renderer->Blit(Title, 0, 0, NULL);
+	
 	return UPDATE_CONTINUE;
 }
 

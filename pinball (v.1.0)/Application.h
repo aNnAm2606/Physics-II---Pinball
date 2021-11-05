@@ -15,7 +15,6 @@ class SceneIntro;
 class ModulePhysics;
 class FadeToBlack;
 
-
 class Application
 {
 public:
