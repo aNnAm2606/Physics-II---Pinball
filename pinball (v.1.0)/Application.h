@@ -10,8 +10,10 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModulePlayer;
-class ModuleSceneIntro;
+class GameScene;
+class SceneIntro;
 class ModulePhysics;
+class FadeToBlack;
 
 
 class Application
@@ -23,8 +25,10 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModulePlayer* player;
-	ModuleSceneIntro* scene_intro;
+	GameScene* gameScene;
+	SceneIntro* sceneIntro;
 	ModulePhysics* physics;
+	FadeToBlack* fadeToBlack;
 
 private:
 
