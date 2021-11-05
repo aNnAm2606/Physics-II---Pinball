@@ -1,7 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
+#include "Animation.h"
 #include "ModuleRender.h"
-#include "ModuleSceneIntro.h"
+#include "GameScene.h"
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
@@ -9,18 +10,18 @@
 
 #include <iostream>
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+GameScene::GameScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
+GameScene::~GameScene()
 {}
 
 // Load assets
-bool ModuleSceneIntro::Start()
+bool GameScene::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -202,7 +203,7 @@ bool ModuleSceneIntro::Start()
 }
 
 // Load assets
-bool ModuleSceneIntro::CleanUp()
+bool GameScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
@@ -210,7 +211,7 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update()
+update_status GameScene::Update()
 {
 	App->renderer->Blit(background, 0, 0, NULL);
 
@@ -388,7 +389,7 @@ update_status ModuleSceneIntro::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 

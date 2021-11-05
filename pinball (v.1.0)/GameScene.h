@@ -6,11 +6,11 @@
 
 class PhysBody;
 
-class ModuleSceneIntro : public Module
+class GameScene : public Module
 {
 public:
-	ModuleSceneIntro(Application* app, bool start_enabled = true);
-	~ModuleSceneIntro();
+	GameScene(Application* app, bool start_enabled = true);
+	~GameScene();
 
 	bool Start();
 	update_status Update();
