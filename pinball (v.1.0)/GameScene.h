@@ -65,6 +65,11 @@ public:
 	PhysBody* smallButterfly4;
 	PhysBody* smallButterfly5;
 
+	PhysBody* movingPlatform;
+	iPoint movingPlatformLimits;
+	float movingPlatformSpeed;
+	bool movingPlatformRight;
+
 	float flickerSpeed;
 
 	/*b2Vec2 wallFlickerL_p;

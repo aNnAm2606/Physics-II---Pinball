@@ -137,8 +137,13 @@ bool GameScene::Start()
 	bouncer = App->physics->CreateRectangle(268, 73, 26, 5, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
 
-	bouncer = App->physics->CreateRectangle(227, 403, 37, 7, 1);
+	bouncer = App->physics->CreateRectangle(180, 403, 37, 7, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
+	movingPlatform = bouncer;
+	movingPlatformLimits = { 150, 227 };
+	movingPlatformSpeed = 50.0f;
+	movingPlatformRight = false;
+
 	bouncer = App->physics->CreateRectangle(103, 310, 26, 5, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
 	bouncer = App->physics->CreateRectangle(284, 306, 26, 5, 1);
@@ -468,6 +473,34 @@ update_status GameScene::Update()
 	{
 		flickerRight->body->ApplyForce({ 5,0 }, { 0,0 }, true);
 	}
+
+	// Moving platform
+	b2Vec2 platform_pos = movingPlatform->body->GetPosition();
+	platform_pos.x = METERS_TO_PIXELS(platform_pos.x);
+	platform_pos.y = METERS_TO_PIXELS(platform_pos.y);
+
+	if (movingPlatformRight) {
+		platform_pos.x += movingPlatformSpeed * App->deltaTime;
+
+		if (platform_pos.x >= movingPlatformLimits.y) {
+			movingPlatformRight = false;
+		}
+	}
+	else if (!movingPlatformRight) {
+		platform_pos.x -= movingPlatformSpeed * App->deltaTime;
+
+		if (platform_pos.x <= movingPlatformLimits.x) {
+			movingPlatformRight = true;
+		}
+	}
+
+	SDL_Rect rect = { 261, 334, 38, 8 };
+	App->renderer->Blit(sprite, platform_pos.x - movingPlatform->width - 1, platform_pos.y - 1 - movingPlatform->height, &rect);
+
+	platform_pos.x = PIXEL_TO_METERS(platform_pos.x);
+	platform_pos.y = PIXEL_TO_METERS(platform_pos.y);
+
+	movingPlatform->body->SetTransform(platform_pos, 0);
 
 	return UPDATE_CONTINUE;
 }
