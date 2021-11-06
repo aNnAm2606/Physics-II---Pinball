@@ -52,6 +52,7 @@ public:
 	PhysBody* circleJointL;
 	PhysBody* bigBird;
 	PhysBody* whiteCat;
+	PhysBody* colourFish;
 	PhysBody* bigButterfly1;
 	PhysBody* bigButterfly2;
 	PhysBody* bigButterfly3;
@@ -81,6 +82,7 @@ public:
 
 	Animation bigBirdAnim;
 	Animation blackCatAnim;
+	Animation fishAnim;
 
 	uint bonus_fx;
 	p2Point<int> ray;
