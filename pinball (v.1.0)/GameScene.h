@@ -77,9 +77,10 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* background;
-	SDL_Texture* bBird;
+	SDL_Texture* sprite;
 
 	Animation bigBirdAnim;
+	Animation blackCatAnim;
 
 	uint bonus_fx;
 	p2Point<int> ray;
