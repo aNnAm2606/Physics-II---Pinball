@@ -199,7 +199,8 @@ bool GameScene::Start()
 	
 	//Create joint for flippers
 	circleJointL = App->physics->CreateCircle(120, 463, 4,1);
-	App->physics->CreateRevoluteJoint(flickerLeft, { 0, 0 }, circleJointL, { 0, 0 }, 0, true, true);
+	App->physics->CreateRevoluteJoint(flickerLeft, { 0,30 }, circleJointL, { 0, 0 }, 0, true, true);
+	
 	return ret;
 }
 

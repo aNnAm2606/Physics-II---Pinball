@@ -29,12 +29,21 @@ bool SceneIntro::Start()
 	cat = App->textures->Load("pinball/catstogether.png");
 
 	catAnimation.PushBack({ 0,0,500,667 });
+	catAnimation.PushBack({ 0,0,500,667 });
+	catAnimation.PushBack({ 500, 0, 500, 667 });
 	catAnimation.PushBack({ 500, 0, 500, 667 });
 	catAnimation.PushBack({ 1000, 0, 500, 667 });
+	catAnimation.PushBack({ 1000, 0, 500, 667 });
+	catAnimation.PushBack({ 0, 667, 500, 667 });
+	catAnimation.PushBack({ 0, 667, 500, 667 });
 	catAnimation.PushBack({ 0, 667, 500, 667 });
 	catAnimation.PushBack({ 500, 667, 500, 667 });
+	catAnimation.PushBack({ 500, 667, 500, 667 });
+	catAnimation.PushBack({ 500, 667, 500, 667 });
 	catAnimation.PushBack({ 1000,667,500,667 });
-	catAnimation.speed = 0.05f;
+	catAnimation.PushBack({ 1000,667,500,667 });
+	catAnimation.PushBack({ 1000,667,500,667 });
+	catAnimation.speed = 0.1f;
 	catAnimation.loop = true;
 
 	return ret;
