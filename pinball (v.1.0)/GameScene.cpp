@@ -49,13 +49,15 @@ bool GameScene::Start()
 	ball->body->SetSleepingAllowed(false);
 	ball->listener = this;
 
+	bounce_ball = false;
+
 	kicker_init_position = { 408, 520 };
 	kicker_max_position = { 408,560 };
 
 	kicker = App->physics->CreateRectangle(kicker_init_position.x, kicker_init_position.y, 42, 10, 1);
 
 	boost_ball = true;
-	boost_init_strength = 100.0f;
+	boost_init_strength = 150.0f;
 	boost_strength = boost_init_strength;
 	boost_max_strength = 300.0f;
 
@@ -96,6 +98,7 @@ bool GameScene::Start()
 
 	App->physics->CreateChain(0, 0, background, 48, 1);
 	//Draw map colliders
+	PhysBody* bouncer;
 	App->physics->CreateRectangle(199, 199, 56, 9, 1);
 	App->physics->CreateRectangle(74, 242, 31, 9, 1);
 	App->physics->CreateRectangle(313, 240, 31, 9, 1);
@@ -355,6 +358,11 @@ update_status GameScene::Update()
 		ball->body->SetAngularVelocity(0);
 	}
 
+	if (bounce_ball) {
+		ball->body->ApplyForceToCenter(b2Vec2(bounce_vel.x, bounce_vel.y), true);
+		bounce_ball = false;
+	}
+
 	// kicker logic
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		if (boost_ball) {
@@ -404,6 +412,12 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);
+
+	if (bodyB->type == PhysBody::Type::SMALL_BIRD || bodyB->type == PhysBody::Type::BOUNCER) {
+		bounce_ball = true;
+		bounce_vel.x = ball->body->GetLinearVelocity().x;
+		bounce_vel.y = ball->body->GetLinearVelocity().y;
+	}
 
 	//ball->body->ApplyForceToCenter(-ball->body->GetLinearVelocity(), true);
 

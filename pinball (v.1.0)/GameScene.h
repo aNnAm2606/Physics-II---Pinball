@@ -33,6 +33,9 @@ public:
 	float boost_addspeed;
 	float boost_time;
 
+	bool bounce_ball;
+	iPoint bounce_vel;
+
 	iPoint spawn_position;
 
 	PhysBody* kicker;
