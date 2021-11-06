@@ -183,16 +183,17 @@ bool GameScene::Start()
 	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 16, 0);
 
 	int flickerR[16] = {
-	265, 457,
-	218, 456,
+	267, 469,
+	217, 469,
+	212, 480,
+	196, 471,
+	194, 455,
 	209, 443,
-	196, 456,
-	196, 470,
-	210, 483,
-	221, 470,
-	266, 470
+	224, 455,
+	265, 455
+	
 	};
-	flickerRight = App->physics->CreateChain(0, 0, flickerR, 14, 2);
+	flickerRight = App->physics->CreateChain(0, 0, flickerR, 16, 2);
 	/*flickerRight_p.x = -22;
 	flickerRight_p.y = -4;*/
 
