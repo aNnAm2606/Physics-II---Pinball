@@ -99,20 +99,33 @@ bool GameScene::Start()
 	App->physics->CreateChain(0, 0, background, 48, 1);
 	//Draw map colliders
 	PhysBody* bouncer;
-	App->physics->CreateRectangle(199, 199, 56, 9, 1);
-	App->physics->CreateRectangle(74, 242, 31, 9, 1);
-	App->physics->CreateRectangle(313, 240, 31, 9, 1);
-	App->physics->CreateRectangle(313, 240, 31, 9, 1);
+	bouncer = App->physics->CreateRectangle(199, 199, 56, 9, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	
+	bouncer = App->physics->CreateRectangle(74, 242, 31, 9, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	bouncer = App->physics->CreateRectangle(313, 240, 31, 9, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+
+	bouncer = App->physics->CreateRectangle(134, 73, 26, 5, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	bouncer = App->physics->CreateRectangle(204, 73, 26, 5, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	bouncer = App->physics->CreateRectangle(268, 73, 26, 5, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+
+	bouncer = App->physics->CreateRectangle(227, 403, 37, 7, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	bouncer = App->physics->CreateRectangle(103, 310, 26, 5, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	bouncer = App->physics->CreateRectangle(284, 306, 26, 5, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+
+	// Walls
 	App->physics->CreateRectangle(74, 336, 19, 180, 1);
 	App->physics->CreateRectangle(312, 332, 19, 180, 1);
 	App->physics->CreateRectangle(312, 332, 19, 180, 1);
-	App->physics->CreateRectangle(227, 403, 37, 7, 1);
-	App->physics->CreateRectangle(103, 310, 26, 5, 1);
-	App->physics->CreateRectangle(284, 306, 26, 5, 1);
-	App->physics->CreateRectangle(134, 73, 26, 5, 1);
-	App->physics->CreateRectangle(204, 72, 26, 5, 1);
-	App->physics->CreateRectangle(268, 73, 26, 5, 1);
-	
+
 	// small birds
 	PhysBody* circle;
 	circle = App->physics->CreateCircle(135, 62, 12, 1);
@@ -360,7 +373,7 @@ update_status GameScene::Update()
 	}
 
 	if (bounce_ball) {
-		ball->body->ApplyForceToCenter(b2Vec2(bounce_vel.x, bounce_vel.y), true);
+		ball->body->ApplyForceToCenter(b2Vec2(bounce_dir.x * 5.0f, bounce_dir.y * 5.0f), true);
 		bounce_ball = false;
 	}
 
@@ -416,8 +429,11 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB->type == PhysBody::Type::SMALL_BIRD || bodyB->type == PhysBody::Type::BOUNCER) {
 		bounce_ball = true;
-		bounce_vel.x = ball->body->GetLinearVelocity().x;
-		bounce_vel.y = ball->body->GetLinearVelocity().y;
+
+		b2Vec2 dir = ball->body->GetLinearVelocity();
+
+		bounce_dir.x = -dir.x;
+		bounce_dir.y = -dir.y;
 	}
 
 	//ball->body->ApplyForceToCenter(-ball->body->GetLinearVelocity(), true);

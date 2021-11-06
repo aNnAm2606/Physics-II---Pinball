@@ -34,7 +34,7 @@ public:
 	float boost_time;
 
 	bool bounce_ball;
-	iPoint bounce_vel;
+	iPoint bounce_dir;
 
 	iPoint spawn_position;
 
