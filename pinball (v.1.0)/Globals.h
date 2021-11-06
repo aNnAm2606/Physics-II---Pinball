@@ -6,7 +6,7 @@
 
 void log(const char file[], int line, const char* format, ...);
 
-#define CAP(n,min,max) ((n <= min) ? n=min: (n >= max) ? n=max: n=n)
+#define CAP(n,minimum,maximum) ((n <= minimum) ? n=minimum: (n >= maximum) ? n=maximum: n=n)
 #define LERP(start,end,pct) start + (end - start) * pct
 
 #define DEGTORAD 0.0174532925199432957f
