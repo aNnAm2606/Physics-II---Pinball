@@ -34,13 +34,21 @@ bool GameScene::Start()
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	background = App->textures->Load("pinball/background.png");
-	bBird = App->textures->Load("pinball/sprites.png");
+	sprite = App->textures->Load("pinball/sprites.png");
 
 	//animations
 	bigBirdAnim.PushBack({ 0,33,55,51 });
 	bigBirdAnim.PushBack({ 55,33,55,51 });
-	bigBirdAnim.speed = 0.05f;
+	bigBirdAnim.speed = 0.02f;
 	bigBirdAnim.loop = true;
+
+	blackCatAnim.PushBack({ 126,139,101,70 });
+	blackCatAnim.PushBack({ 16,141,101,70 });
+	blackCatAnim.PushBack({ 126,139,101,70 });
+	blackCatAnim.PushBack({ 232,142,101,70 });
+	blackCatAnim.PushBack({ 341,140,101,70 });
+	blackCatAnim.speed = 0.05f;
+	blackCatAnim.loop = true;
 
 	spawn_position = {408, 500};
 
@@ -297,9 +305,13 @@ update_status GameScene::Update()
 
 	//animation 
 	
+	blackCatAnim.Update();
+	SDL_Rect bc = blackCatAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, 334, 528, &bc);
+
 	bigBirdAnim.Update();
 	SDL_Rect bb = bigBirdAnim.GetCurrentFrame();
-	App->renderer->Blit(bBird, 170, 148, &bb);
+	App->renderer->Blit(sprite, 170, 148, &bb);
 	// Prepare for raycast ------------------------------------------------------
 	
 	iPoint mouse;
