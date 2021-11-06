@@ -84,6 +84,7 @@ public:
 	Animation bigBirdAnim;
 	Animation blackCatAnim;
 	Animation fishAnim;
+	Animation fishAnimR;
 
 	uint bonus_fx;
 	p2Point<int> ray;

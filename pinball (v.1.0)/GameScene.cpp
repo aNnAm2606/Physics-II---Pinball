@@ -37,6 +37,12 @@ bool GameScene::Start()
 	sprite = App->textures->Load("pinball/sprites.png");
 
 	//animations
+	fishAnimR.PushBack({ 226,236,67,60 });
+	fishAnimR.PushBack({ 297,236,67,60 });
+	fishAnimR.PushBack({ 370,236,67,60 });
+	fishAnimR.speed = 0.02f;
+	fishAnimR.loop = true;
+
 	fishAnim.PushBack({ 7,239,67,60 });
 	fishAnim.PushBack({ 80,237,67,60 });
 	fishAnim.PushBack({ 149,236,67,60 });
@@ -317,6 +323,10 @@ update_status GameScene::Update()
 	//}
 
 	//animation 
+	fishAnimR.Update();
+	SDL_Rect rf = fishAnimR.GetCurrentFrame();
+	App->renderer->Blit(sprite, 229, 245, &rf);
+
 	fishAnim.Update();
 	SDL_Rect cf = fishAnim.GetCurrentFrame();
 	App->renderer->Blit(sprite, 89, 245, &cf);
