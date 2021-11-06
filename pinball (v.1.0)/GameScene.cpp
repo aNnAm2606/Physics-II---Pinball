@@ -44,6 +44,9 @@ bool GameScene::Start()
 
 	spawn_position = {408, 500};
 
+	birdoHitCount = 0;
+	score = 0;
+
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 
 	ball->body->SetSleepingAllowed(false);
@@ -144,7 +147,8 @@ bool GameScene::Start()
 	circle->type = PhysBody::Type::SMALL_BIRD;
 
 	//big bird
-	bigBird = App->physics->CreateCircleSensor(196, 178, 17, 1);
+	bigBird = App->physics->CreateCircle(196, 178, 17, 1);
+	bigBird->type = PhysBody::Type::BIG_BIRD;
 
 	int milkbox[14] = {
 	52, 150,
@@ -427,13 +431,27 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	App->audio->PlayFx(bonus_fx);
 
-	if (bodyB->type == PhysBody::Type::SMALL_BIRD || bodyB->type == PhysBody::Type::BOUNCER) {
+	if (bodyB->type != PhysBody::Type::NONE) {
 		bounce_ball = true;
 
 		b2Vec2 dir = ball->body->GetLinearVelocity();
 
 		bounce_dir.x = -dir.x;
 		bounce_dir.y = -dir.y;
+	}
+
+	if (bodyB->type == PhysBody::Type::SMALL_BIRD) {
+		birdoHitCount++;
+		score += 5;
+	}
+	else if (bodyB->type == PhysBody::Type::BIG_BIRD) {
+		birdoHitCount++;
+		score += 10;
+	}
+
+	if (birdoHitCount == 3) {
+		lifes++;
+		birdoHitCount = 0;
 	}
 
 	//ball->body->ApplyForceToCenter(-ball->body->GetLinearVelocity(), true);

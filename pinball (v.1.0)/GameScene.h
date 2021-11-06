@@ -69,6 +69,8 @@ public:
 	b2Vec2 flickerRight_p;
 	b2Vec2 flickerLeft_p;*/
 
+	int birdoHitCount;
+	int score;
 	int lifes;
 
 	SDL_Texture* circle;
