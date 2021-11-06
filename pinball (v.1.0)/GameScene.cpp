@@ -169,28 +169,29 @@ bool GameScene::Start()
 	wallFlickerR = App->physics->CreateChain(0, 0, scratcherR, 16, 1);
 
 	// flickers
-	int flickerL[14] = {
-		116, 453,
-		160, 486,
-		169, 487,
-		176, 493,
-		178, 502,
-		169, 512,
-		106, 462
+	int flickerL[16] = {
+	120, 458,
+	169, 454,
+	176, 445,
+	190, 455,
+	190, 471,
+	176, 483,
+	166, 472,
+	119, 470
 	};
 	
-	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 14, 0);
+	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 16, 0);
 
-	int flickerR[14] = {
-	270, 450,
-	225, 490,
-	217, 490,
-	210, 496,
-	208, 504,
-	218, 514,
-	279, 459
+	int flickerR[16] = {
+	265, 457,
+	218, 456,
+	209, 443,
+	196, 456,
+	196, 470,
+	210, 483,
+	221, 470,
+	266, 470
 	};
-	App->physics->CreateChain(0, 0, flickerR, 14, 1);
 	flickerRight = App->physics->CreateChain(0, 0, flickerR, 14, 2);
 	/*flickerRight_p.x = -22;
 	flickerRight_p.y = -4;*/
