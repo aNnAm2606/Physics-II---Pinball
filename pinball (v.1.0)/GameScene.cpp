@@ -169,39 +169,14 @@ bool GameScene::Start()
 	wallFlickerR = App->physics->CreateChain(0, 0, scratcherR, 16, 1);
 
 	// flickers
-	int flickerL[16] = {
-	120, 458,
-	169, 454,
-	176, 445,
-	190, 455,
-	190, 471,
-	176, 483,
-	166, 472,
-	119, 470
-	};
-	
-	flickerLeft = App->physics->CreateChain(0, 0, flickerL, 16, 0);
-
-	int flickerR[16] = {
-	267, 469,
-	217, 469,
-	212, 480,
-	196, 471,
-	194, 455,
-	209, 443,
-	224, 455,
-	265, 455
-	
-	};
-	flickerRight = App->physics->CreateChain(0, 0, flickerR, 16, 2);
-	/*flickerRight_p.x = -22;
-	flickerRight_p.y = -4;*/
+	flickerLeft = App->physics->CreateRectangle(152, 468, 57, 14, 1);
+	flickerRight = App->physics->CreateRectangle(238, 468, 57, 14, 1);
 
 	//Add kinematic fish
 	
 	//Create joint for flippers
 	circleJointL = App->physics->CreateCircle(120, 463, 4,1);
-	App->physics->CreateRevoluteJoint(flickerLeft, { 0,30 }, circleJointL, { 0, 0 }, 0, true, true);
+	/*App->physics->CreateRevoluteJoint(flickerLeft, { 0,30 }, circleJointL, { 0, 0 }, 0, true, true);*/
 	
 	return ret;
 }
