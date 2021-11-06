@@ -59,6 +59,8 @@ public:
 	PhysBody* smallButterfly4;
 	PhysBody* smallButterfly5;
 
+	float flickerSpeed;
+
 	/*b2Vec2 wallFlickerL_p;
 	b2Vec2 wallFlickerR_p;
 	b2Vec2 flickerRight_p;

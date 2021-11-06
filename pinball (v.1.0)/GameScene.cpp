@@ -45,6 +45,8 @@ bool GameScene::Start()
 	spawn_position = {408, 500};
 
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
+
+	ball->body->SetSleepingAllowed(false);
 	ball->listener = this;
 
 	kicker_init_position = { 408, 520 };
@@ -60,6 +62,8 @@ bool GameScene::Start()
 	boost_timer = 0.0f;
 	boost_addspeed = 0.8f;
 	boost_time = 1.0f;
+
+	flickerSpeed = 50.0f;
 
 	/*sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50, false);*/
 
@@ -106,11 +110,22 @@ bool GameScene::Start()
 	App->physics->CreateRectangle(204, 72, 26, 5, 1);
 	App->physics->CreateRectangle(268, 73, 26, 5, 1);
 	
-	App->physics->CreateCircleSensor(135, 62, 12, 1);
-	App->physics->CreateCircleSensor(204, 62, 12, 1);
-	App->physics->CreateCircleSensor(269, 62, 12, 1);
-	App->physics->CreateCircleSensor(102, 299, 12, 1);
-	App->physics->CreateCircleSensor(284, 295, 12, 1);
+	// small birds
+	PhysBody* circle;
+	circle = App->physics->CreateCircle(135, 62, 12, 1);
+	circle->type = PhysBody::Type::SMALL_BIRD;
+
+	circle = App->physics->CreateCircle(204, 62, 12, 1);
+	circle->type = PhysBody::Type::SMALL_BIRD;
+
+	circle = App->physics->CreateCircle(269, 62, 12, 1);
+	circle->type = PhysBody::Type::SMALL_BIRD;
+
+	circle = App->physics->CreateCircle(102, 299, 12, 1);
+	circle->type = PhysBody::Type::SMALL_BIRD;
+
+	circle = App->physics->CreateCircle(284, 295, 12, 1);
+	circle->type = PhysBody::Type::SMALL_BIRD;
 
 	//big bird
 	bigBird = App->physics->CreateCircleSensor(196, 178, 17, 1);
@@ -186,7 +201,7 @@ bool GameScene::Start()
 	
 	//Create joint for flippers
 	circleJointL = App->physics->CreateCircle(120, 463, 4,1);
-	/*App->physics->CreateRevoluteJoint(flickerLeft, { 0,30 }, circleJointL, { 0, 0 }, 0, true, true);*/
+	App->physics->CreateRevoluteJoint(circleJointL, { 0,0 }, flickerLeft, { 0, 0 }, 45, true, true);
 	
 	return ret;
 }
@@ -335,7 +350,9 @@ update_status GameScene::Update()
 	{
 		boost_ball = true;
 		lifes--;
-		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), ball->body->GetAngle());
+		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), 0);
+		ball->body->SetLinearVelocity(b2Vec2_zero);
+		ball->body->SetAngularVelocity(0);
 	}
 
 	// kicker logic
@@ -387,6 +404,8 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);
+
+	//ball->body->ApplyForceToCenter(-ball->body->GetLinearVelocity(), true);
 
 	/*
 	if(bodyA)

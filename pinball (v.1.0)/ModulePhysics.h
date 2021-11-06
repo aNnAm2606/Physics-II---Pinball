@@ -30,7 +30,10 @@ public:
 
 public:
 	enum class Type {
-		BOUNCER
+		BOUNCER,
+		SMALL_BIRD,
+		BIG_BIRD,
+		NONE
 	};
 	int width, height;
 	b2Body* body;
