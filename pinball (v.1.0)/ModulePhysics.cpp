@@ -117,6 +117,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, int dynamic = 0)
 	pbody->body = b;
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = radius;
+	pbody->type = PhysBody::Type::NONE;
 
 	// Return our PhysBody class
 	return pbody;
@@ -163,6 +164,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, in
 	b->SetUserData(pbody);
 	pbody->width = width * 0.5f;
 	pbody->height = height * 0.5f;
+	pbody->type = PhysBody::Type::NONE;
 
 	// Return our PhysBody class
 	return pbody;
@@ -210,6 +212,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	b->SetUserData(pbody);
 	pbody->width = width;
 	pbody->height = height;
+	pbody->type = PhysBody::Type::NONE;
 
 	// Return our PhysBody class
 	return pbody;
@@ -260,6 +263,7 @@ PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius, int dynami
 	pbody->body = b;
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = radius;
+	pbody->type = PhysBody::Type::NONE;
 
 	// Return our PhysBody class
 	return pbody;
@@ -313,6 +317,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, int dy
 	pbody->body = b;
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = 0;
+	pbody->type = PhysBody::Type::NONE;
 
 	// Return our PhysBody class
 	return pbody;
@@ -426,6 +431,14 @@ update_status ModulePhysics::PostUpdate()
 bool ModulePhysics::CleanUp()
 {
 	LOG("Destroying physics world");
+
+	b2Body* node = world->GetBodyList();
+	while (node)
+	{
+		b2Body* b = node;
+		node = node->GetNext();
+		world->DestroyBody(b);
+	}
 
 	// Delete the whole physics world!
 	delete world;
