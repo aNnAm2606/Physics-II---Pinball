@@ -142,7 +142,7 @@ bool GameScene::Start()
 	movingPlatform = bouncer;
 	movingPlatformLimits = { 150, 227 };
 	movingPlatformSpeed = 50.0f;
-	movingPlatformRight = false;
+	movingPlatformRight = true;
 
 	bouncer = App->physics->CreateRectangle(103, 310, 26, 5, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
@@ -210,14 +210,16 @@ bool GameScene::Start()
 		133, 416,
 		85, 348
 	};
-	App->physics->CreateChain(0, 0, books, 6, 1);
+	PhysBody* pbooks = App->physics->CreateChain(0, 0, books, 6, 1);
+	pbooks->type = PhysBody::Type::BOUNCER;
 
 	int books2[6] = {
 	300, 346,
 	251, 415,
 	300, 415
 	};
-	App->physics->CreateChain(0, 0, books2, 6, 1);
+	pbooks = App->physics->CreateChain(0, 0, books2, 6, 1);
+	pbooks->type = PhysBody::Type::BOUNCER;
 
 	int scratcherL[16] = {
 	64, 425,
@@ -229,8 +231,9 @@ bool GameScene::Start()
 	121, 456,
 	82, 418
 	};
-	App->physics->CreateChain(0, 0, scratcherL, 16, 1);
+	//App->physics->CreateChain(0, 0, scratcherL, 16, 1);
 	wallFlickerL = App->physics->CreateChain(0, 0, scratcherL, 16, 1);
+	wallFlickerL->type == PhysBody::Type::BOUNCER;
 
 
 	int scratcherR[16] = {
@@ -243,8 +246,9 @@ bool GameScene::Start()
 	274, 466,
 	320, 424
 	};
-	App->physics->CreateChain(0, 0, scratcherR, 16, 1);
+	//App->physics->CreateChain(0, 0, scratcherR, 16, 1);
 	wallFlickerR = App->physics->CreateChain(0, 0, scratcherR, 16, 1);
+	wallFlickerR->type == PhysBody::Type::BOUNCER;
 
 	// flickers
 	flickerLeft = App->physics->CreateRectangle(152, 468, 57, 14, 0);
@@ -480,8 +484,7 @@ update_status GameScene::Update()
 	platform_pos.y = METERS_TO_PIXELS(platform_pos.y);
 
 	if (movingPlatformRight) {
-		platform_pos.x += movingPlatformSpeed * App->deltaTime;
-
+		platform_pos.x += movingPlatformSpeed * 2 * App->deltaTime;
 		if (platform_pos.x >= movingPlatformLimits.y) {
 			movingPlatformRight = false;
 		}
