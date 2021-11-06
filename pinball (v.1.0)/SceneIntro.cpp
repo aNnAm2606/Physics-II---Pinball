@@ -24,8 +24,8 @@ bool SceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	bool ret = true;
-
 	// Load the textures example: Title = App->textures->Load("");
+	startBackground = App->textures->Load("pinball/start screen.png");
 
 	return ret;
 }
@@ -39,6 +39,7 @@ update_status SceneIntro::Update()
 	}
 
 	// Put images, example: App->renderer->Blit(Title, 0, 0, NULL);
+	App->renderer->Blit(startBackground, 0, 0, NULL);
 	
 	return UPDATE_CONTINUE;
 }

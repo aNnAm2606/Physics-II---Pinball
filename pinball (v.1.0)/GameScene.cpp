@@ -28,6 +28,7 @@ bool GameScene::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	//Loading sprites
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
