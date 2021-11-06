@@ -38,7 +38,7 @@ bool GameScene::Start()
 
 	//animations
 	bigBirdAnim.PushBack({ 0,33,55,51 });
-	bigBirdAnim.PushBack({ 57,33,55,51 });
+	bigBirdAnim.PushBack({ 55,33,55,51 });
 	bigBirdAnim.speed = 0.05f;
 	bigBirdAnim.loop = true;
 
@@ -283,7 +283,8 @@ update_status GameScene::Update()
 	//}
 
 	//animation 
-
+	
+	bigBirdAnim.Update();
 	SDL_Rect bb = bigBirdAnim.GetCurrentFrame();
 	App->renderer->Blit(bBird, 170, 148, &bb);
 	// Prepare for raycast ------------------------------------------------------
