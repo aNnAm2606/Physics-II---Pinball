@@ -50,6 +50,7 @@ public:
 	PhysBody* flickerLeft;
 	PhysBody* flickerRight;
 	PhysBody* circleJointL;
+	PhysBody* circleJointR;
 	PhysBody* bigBird;
 	PhysBody* whiteCat;
 	PhysBody* colourFish;
