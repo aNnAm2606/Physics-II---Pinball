@@ -53,7 +53,8 @@ public:
 	PhysBody* circleJointR;
 	PhysBody* bigBird;
 	PhysBody* whiteCat;
-	PhysBody* colourFish;
+	PhysBody* fishR;
+	PhysBody* fishL;
 	PhysBody* bigButterfly1;
 	PhysBody* bigButterfly2;
 	PhysBody* bigButterfly3;

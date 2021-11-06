@@ -170,6 +170,14 @@ bool GameScene::Start()
 	bigBird = App->physics->CreateCircle(196, 178, 17, 1);
 	bigBird->type = PhysBody::Type::BIG_BIRD;
 
+	int leftFish[8] = {
+	92, 240,
+	159, 288,
+	146, 305,
+	80, 259
+	};
+	fishL = App->physics->CreateChain(0, 0, leftFish, 8, 1);
+
 	int milkbox[14] = {
 	52, 150,
 	65, 169,
