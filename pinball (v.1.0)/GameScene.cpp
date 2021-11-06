@@ -37,6 +37,15 @@ bool GameScene::Start()
 	sprite = App->textures->Load("pinball/sprites.png");
 
 	//animations
+	whiteCatAnim.PushBack({ 266,45,40,38 });
+	whiteCatAnim.PushBack({ 312,46,40,38 });
+	whiteCatAnim.PushBack({ 354,46,40,38 });
+	whiteCatAnim.PushBack({ 399,45,40,38 });
+	whiteCatAnim.PushBack({ 354,46,40,38 });
+	whiteCatAnim.PushBack({ 312,46,40,38 });
+	whiteCatAnim.speed = 0.02f;
+	whiteCatAnim.loop = true;
+
 	fishAnimR.PushBack({ 226,236,67,60 });
 	fishAnimR.PushBack({ 297,236,67,60 });
 	fishAnimR.PushBack({ 370,236,67,60 });
@@ -144,6 +153,13 @@ bool GameScene::Start()
 	movingPlatformSpeed = 50.0f;
 	movingPlatformRight = true;
 
+	bouncer = App->physics->CreateRectangle(180, 384, 18, 33, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	movingCat = bouncer;
+	movingCatLimits = { 150, 227 };
+	movingCatSpeed = 50.0f;
+	movingCatRight = true;
+
 	bouncer = App->physics->CreateRectangle(103, 310, 26, 5, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
 	bouncer = App->physics->CreateRectangle(284, 306, 26, 5, 1);
@@ -182,6 +198,14 @@ bool GameScene::Start()
 	80, 259
 	};
 	fishL = App->physics->CreateChain(0, 0, leftFish, 8, 1);
+
+	int rightFish[8] = {
+	293, 239,
+	227, 284,
+	236, 307,
+	301, 258
+	};
+	fishR = App->physics->CreateChain(0, 0, rightFish, 8, 1);
 
 	int milkbox[14] = {
 	52, 150,
@@ -344,6 +368,7 @@ update_status GameScene::Update()
 	SDL_Rect rf = fishAnimR.GetCurrentFrame();
 	App->renderer->Blit(sprite, 229, 245, &rf);
 
+
 	fishAnim.Update();
 	SDL_Rect cf = fishAnim.GetCurrentFrame();
 	App->renderer->Blit(sprite, 89, 245, &cf);
@@ -504,6 +529,34 @@ update_status GameScene::Update()
 	platform_pos.y = PIXEL_TO_METERS(platform_pos.y);
 
 	movingPlatform->body->SetTransform(platform_pos, 0);
+
+	// Moving cat
+	b2Vec2 cat_pos = movingCat->body->GetPosition();
+	cat_pos.x = METERS_TO_PIXELS(cat_pos.x);
+	cat_pos.y = METERS_TO_PIXELS(cat_pos.y);
+
+	if (movingCatRight) {
+		cat_pos.x += movingCatSpeed * 2 * App->deltaTime;
+		if (cat_pos.x >= movingCatLimits.y) {
+			movingCatRight = false;
+		}
+	}
+	else if (!movingCatRight) {
+		cat_pos.x -= movingCatSpeed * App->deltaTime;
+
+		if (cat_pos.x <= movingCatLimits.x) {
+			movingCatRight = true;
+		}
+	}
+
+	whiteCatAnim.Update();
+	SDL_Rect wc = whiteCatAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, cat_pos.x - movingCat->width - 1, cat_pos.y - 1 - movingCat->height, &wc);
+
+	cat_pos.x = PIXEL_TO_METERS(cat_pos.x);
+	cat_pos.y = PIXEL_TO_METERS(cat_pos.y);
+
+	movingCat->body->SetTransform(cat_pos, 0);
 
 	return UPDATE_CONTINUE;
 }

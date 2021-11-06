@@ -65,10 +65,14 @@ public:
 	PhysBody* smallButterfly4;
 	PhysBody* smallButterfly5;
 
+	PhysBody* movingCat;
 	PhysBody* movingPlatform;
 	iPoint movingPlatformLimits;
+	iPoint movingCatLimits;
 	float movingPlatformSpeed;
+	float movingCatSpeed;
 	bool movingPlatformRight;
+	bool movingCatRight;
 
 	float flickerSpeed;
 
@@ -91,6 +95,7 @@ public:
 	Animation blackCatAnim;
 	Animation fishAnim;
 	Animation fishAnimR;
+	Animation whiteCatAnim;
 
 	uint bonus_fx;
 	p2Point<int> ray;
