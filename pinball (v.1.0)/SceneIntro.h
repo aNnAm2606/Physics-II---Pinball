@@ -30,6 +30,7 @@ public:
 	SDL_Texture* startBackground;
 	SDL_Texture* cat;
 
+	Animation catAnimation;
 	
 };
 
