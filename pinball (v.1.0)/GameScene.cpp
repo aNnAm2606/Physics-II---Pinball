@@ -34,6 +34,13 @@ bool GameScene::Start()
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	background = App->textures->Load("pinball/background.png");
+	bBird = App->textures->Load("pinball/sprites.png");
+
+	//animations
+	bigBirdAnim.PushBack({ 0,33,55,51 });
+	bigBirdAnim.PushBack({ 57,33,55,51 });
+	bigBirdAnim.speed = 0.05f;
+	bigBirdAnim.loop = true;
 
 	spawn_position = {408, 500};
 
@@ -104,6 +111,9 @@ bool GameScene::Start()
 	App->physics->CreateCircleSensor(269, 62, 12, 1);
 	App->physics->CreateCircleSensor(102, 299, 12, 1);
 	App->physics->CreateCircleSensor(284, 295, 12, 1);
+
+	//big bird
+	bigBird = App->physics->CreateCircleSensor(196, 178, 17, 1);
 
 	int milkbox[14] = {
 	52, 150,
@@ -254,6 +264,10 @@ update_status GameScene::Update()
 	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64, 1));
 	//}
 
+	//animation 
+
+	SDL_Rect bb = bigBirdAnim.GetCurrentFrame();
+	App->renderer->Blit(bBird, 170, 148, &bb);
 	// Prepare for raycast ------------------------------------------------------
 	
 	iPoint mouse;

@@ -47,6 +47,17 @@ public:
 	PhysBody* flickerLeft;
 	PhysBody* flickerRight;
 	PhysBody* circleJointL;
+	PhysBody* bigBird;
+	PhysBody* whiteCat;
+	PhysBody* bigButterfly1;
+	PhysBody* bigButterfly2;
+	PhysBody* bigButterfly3;
+	PhysBody* bigButterfly4;
+	PhysBody* smallButterfly1;
+	PhysBody* smallButterfly2;
+	PhysBody* smallButterfly3;
+	PhysBody* smallButterfly4;
+	PhysBody* smallButterfly5;
 
 	/*b2Vec2 wallFlickerL_p;
 	b2Vec2 wallFlickerR_p;
@@ -59,6 +70,10 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* background;
+	SDL_Texture* bBird;
+
+	Animation bigBirdAnim;
+
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
