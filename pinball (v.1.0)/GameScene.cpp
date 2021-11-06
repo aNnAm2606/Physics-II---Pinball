@@ -222,14 +222,17 @@ bool GameScene::Start()
 	wallFlickerR = App->physics->CreateChain(0, 0, scratcherR, 16, 1);
 
 	// flickers
-	flickerLeft = App->physics->CreateRectangle(152, 468, 57, 14, 1);
-	flickerRight = App->physics->CreateRectangle(238, 468, 57, 14, 1);
+	flickerLeft = App->physics->CreateRectangle(152, 468, 57, 14, 0);
+	flickerRight = App->physics->CreateRectangle(238, 468, 57, 14, 0);
 
 	//Add kinematic fish
 	
 	//Create joint for flippers
-	circleJointL = App->physics->CreateCircle(120, 463, 4,1);
-	App->physics->CreateRevoluteJoint(circleJointL, { 0,0 }, flickerLeft, { 0, 0 }, 45, true, true);
+	circleJointL = App->physics->CreateCircle(120, 463, 4, 1);
+	circleJointR = App->physics->CreateCircle(270, 463, 4, 1);
+
+	App->physics->CreateRevoluteJoint(flickerLeft, { -0.9f,0 }, circleJointL, { 0, 0 }, 45, true, true);
+	App->physics->CreateRevoluteJoint(flickerRight, { 0.8f,0 }, circleJointR, { 0, 0 }, 45, true, true);
 	
 	return ret;
 }
@@ -430,9 +433,14 @@ update_status GameScene::Update()
 
 	//FLICKER L
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		{
-		flickerLeft->body->ApplyForce({40,0}, {0,0}, true);
-		}
+	{
+		flickerLeft->body->ApplyForce({-5,0}, {0,0}, true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		flickerRight->body->ApplyForce({ 5,0 }, { 0,0 }, true);
+	}
 
 	return UPDATE_CONTINUE;
 }
