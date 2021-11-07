@@ -20,7 +20,6 @@ bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
 
-	App->audio->Init();
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	bool ret = true;
@@ -77,6 +76,6 @@ bool SceneIntro::CleanUp()
 {
 	App->textures->Unload(startBackground);
 	App->textures->Unload(cat);
-	App->audio->CleanUp();
+	App->audio->Clear();
 	return true;
 }

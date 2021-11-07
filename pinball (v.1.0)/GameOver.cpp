@@ -52,5 +52,6 @@ bool GameOver::CleanUp()
 {
 	LOG("Freeing scene GameOver");
 	App->textures->Unload(texture);
+	App->audio->Clear();
 	return true;
 }

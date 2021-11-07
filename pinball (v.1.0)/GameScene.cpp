@@ -30,7 +30,6 @@ bool GameScene::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->audio->Init();
 	App->physics->Enable();
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -369,7 +368,7 @@ bool GameScene::CleanUp()
 	App->textures->Unload(circle);
 	App->textures->Unload(box);
 	App->textures->Unload(rick);
-	App->audio->CleanUp();
+	App->audio->Clear();
 	return true;
 }
 
