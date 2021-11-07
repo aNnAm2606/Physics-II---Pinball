@@ -37,6 +37,26 @@ bool GameScene::Start()
 	sprite = App->textures->Load("pinball/sprites.png");
 
 	//animations
+	ballAnim.PushBack({ 193,17,23,22 });
+
+	ratRAnim.PushBack({ 164,92,47,23 });
+	ratRAnim.PushBack({ 211,89,47,23 });
+	ratRAnim.PushBack({ 164,92,47,23 });
+	ratRAnim.PushBack({ 204,63,47,23 });
+	ratRAnim.PushBack({ 157,63,47,23 });
+	ratRAnim.PushBack({ 204,63,47,23 });
+	ratRAnim.speed = 0.07f;
+	ratRAnim.loop = true;
+
+	ratLAnim.PushBack({ 157,63,47,23 });
+	ratLAnim.PushBack({ 204,63,47,23 });
+	ratLAnim.PushBack({ 157,63,47,23 });
+	ratLAnim.PushBack({ 211,89,47,23 });
+	ratLAnim.PushBack({ 164,92,47,23 });
+	ratLAnim.PushBack({ 211,89,47,23 });
+	ratLAnim.speed = 0.07f;
+	ratLAnim.loop = true;
+
 	whiteCatAnim.PushBack({ 266,45,40,38 });
 	whiteCatAnim.PushBack({ 312,46,40,38 });
 	whiteCatAnim.PushBack({ 354,46,40,38 });
@@ -153,6 +173,24 @@ bool GameScene::Start()
 	movingPlatformSpeed = 50.0f;
 	movingPlatformRight = true;
 
+	//moving Left rat
+	bouncer = App->physics->CreateRectangle(70, 214, 40, 21, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	movingRatL = bouncer;
+	movingRatLLimits = { 51, 133 };
+	movingRatSpeed = 60.0f;
+	movingRatLRight = true;
+
+	//moving Right rat
+	bouncer = App->physics->CreateRectangle(278, 214, 40, 21, 1);
+	bouncer->type = PhysBody::Type::BOUNCER;
+	movingRatR = bouncer;
+	movingRatRLimits = { 260, 336 };
+	movingRatSpeed = 60.0f;
+	movingRatRRight = true;
+
+
+	//moving Cat
 	bouncer = App->physics->CreateRectangle(180, 384, 18, 33, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
 	movingCat = bouncer;
@@ -442,6 +480,7 @@ update_status GameScene::Update()
 
 	// Ball update
 	// If ball falls off the screen, respawn in position and lives--
+	int ballX = METERS_TO_PIXELS(ball->body->GetPosition().x);
 	int ballY = METERS_TO_PIXELS(ball->body->GetPosition().y);
 	if (ballY >= SCREEN_HEIGHT)
 	{
@@ -456,6 +495,9 @@ update_status GameScene::Update()
 		ball->body->ApplyForceToCenter(b2Vec2(bounce_dir.x * 5.0f, bounce_dir.y * 5.0f), true);
 		bounce_ball = false;
 	}
+	ballAnim.Update();
+	SDL_Rect brect = ballAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, ballX-10, ballY-10, &brect, 1.0f);
 
 	// kicker logic
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
@@ -557,6 +599,62 @@ update_status GameScene::Update()
 	cat_pos.y = PIXEL_TO_METERS(cat_pos.y);
 
 	movingCat->body->SetTransform(cat_pos, 0);
+
+	// Moving left rat
+	b2Vec2 ratl_pos = movingRatL->body->GetPosition();
+	ratl_pos.x = METERS_TO_PIXELS(ratl_pos.x);
+	ratl_pos.y = METERS_TO_PIXELS(ratl_pos.y);
+
+	if (movingRatLRight) {
+		ratl_pos.x += movingRatSpeed * 2 * App->deltaTime;
+		if (ratl_pos.x >= movingRatLLimits.y) {
+			movingRatLRight = false;
+		}
+	}
+	else if (!movingRatLRight) {
+		ratl_pos.x -= movingRatSpeed * App->deltaTime;
+
+		if (ratl_pos.x <= movingRatLLimits.x) {
+			movingRatLRight = true;
+		}
+	}
+
+	ratLAnim.Update();
+	SDL_Rect lr = ratLAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, ratl_pos.x - movingRatL->width - 1, ratl_pos.y - 1 - movingRatL->height, &lr);
+
+	ratl_pos.x = PIXEL_TO_METERS(ratl_pos.x);
+	ratl_pos.y = PIXEL_TO_METERS(ratl_pos.y);
+
+	movingRatL->body->SetTransform(ratl_pos, 0);
+
+	// Moving right rat
+	b2Vec2 ratr_pos = movingRatR->body->GetPosition();
+	ratr_pos.x = METERS_TO_PIXELS(ratr_pos.x);
+	ratr_pos.y = METERS_TO_PIXELS(ratr_pos.y);
+
+	if (movingRatRRight) {
+		ratr_pos.x += movingRatSpeed * 2 * App->deltaTime;
+		if (ratr_pos.x >= movingRatRLimits.y) {
+			movingRatRRight = false;
+		}
+	}
+	else if (!movingRatRRight) {
+		ratr_pos.x -= movingRatSpeed * App->deltaTime;
+
+		if (ratr_pos.x <= movingRatRLimits.x) {
+			movingRatRRight = true;
+		}
+	}
+
+	ratRAnim.Update();
+	SDL_Rect rr = ratRAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, ratr_pos.x - movingRatR->width - 1, ratr_pos.y - 1 - movingRatR->height, &rr);
+
+	ratr_pos.x = PIXEL_TO_METERS(ratr_pos.x);
+	ratr_pos.y = PIXEL_TO_METERS(ratr_pos.y);
+
+	movingRatR->body->SetTransform(ratr_pos, 0);
 
 	return UPDATE_CONTINUE;
 }

@@ -55,23 +55,21 @@ public:
 	PhysBody* whiteCat;
 	PhysBody* fishR;
 	PhysBody* fishL;
-	PhysBody* bigButterfly1;
-	PhysBody* bigButterfly2;
-	PhysBody* bigButterfly3;
-	PhysBody* bigButterfly4;
-	PhysBody* smallButterfly1;
-	PhysBody* smallButterfly2;
-	PhysBody* smallButterfly3;
-	PhysBody* smallButterfly4;
-	PhysBody* smallButterfly5;
 
+	PhysBody* movingRatL;
+	PhysBody* movingRatR;
 	PhysBody* movingCat;
 	PhysBody* movingPlatform;
 	iPoint movingPlatformLimits;
 	iPoint movingCatLimits;
+	iPoint movingRatRLimits;
+	iPoint movingRatLLimits;
 	float movingPlatformSpeed;
 	float movingCatSpeed;
+	float movingRatSpeed;
 	bool movingPlatformRight;
+	bool movingRatRRight;
+	bool movingRatLRight;
 	bool movingCatRight;
 
 	float flickerSpeed;
@@ -96,6 +94,9 @@ public:
 	Animation fishAnim;
 	Animation fishAnimR;
 	Animation whiteCatAnim;
+	Animation ratRAnim;
+	Animation ratLAnim;
+	Animation ballAnim;
 
 	uint bonus_fx;
 	p2Point<int> ray;
