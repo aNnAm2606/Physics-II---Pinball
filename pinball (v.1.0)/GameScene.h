@@ -42,6 +42,10 @@ public:
 	iPoint kicker_init_position;
 	iPoint kicker_max_position;
 
+	p2List<PhysBody*> fishes;
+
+	int max_balls;
+
 	PhysBody* sensor;
 	bool sensed;
 

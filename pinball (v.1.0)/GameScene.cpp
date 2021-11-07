@@ -29,6 +29,8 @@ bool GameScene::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->physics->Enable();
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	//Loading sprites
@@ -107,6 +109,7 @@ bool GameScene::Start()
 	birdoHitCount = 0;
 	score = 0;
 	lifes = 3;
+	max_balls = 8;
 
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 
@@ -344,6 +347,8 @@ bool GameScene::Start()
 bool GameScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
+
+	App->physics->Disable();
 
 	return true;
 }
@@ -698,12 +703,12 @@ update_status GameScene::Update()
 	movingRatR->body->SetTransform(ratr_pos, 0);
 
 	// Draw score
-	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 21);
-	App->renderer->DrawNumber(score, 200, 620, 6, numberSprite, 20, 21);
-	App->renderer->DrawNumber(bestScore, 360, 620, 6, numberSprite, 20, 21);
+	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 20);
+	App->renderer->DrawNumber(score, 200, 620, 6, numberSprite, 20, 20);
+	App->renderer->DrawNumber(bestScore, 360, 620, 6, numberSprite, 20, 20);
 
 	// Draw lifes
-	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 21);
+	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 20);
 
 	return UPDATE_CONTINUE;
 }
@@ -736,8 +741,8 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		lifes++;
 		birdoHitCount = 0;
 
-		if (lifes > 9) {
-			lifes = 9;
+		if (lifes > max_balls) {
+			lifes = max_balls;
 		}
 	}
 
