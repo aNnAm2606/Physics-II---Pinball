@@ -781,7 +781,7 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		score += 10;
 	}
 
-	if (birdoHitCount == 3) {
+	if (birdoHitCount == 6) {
 		lifes++;
 		birdoHitCount = 0;
 
