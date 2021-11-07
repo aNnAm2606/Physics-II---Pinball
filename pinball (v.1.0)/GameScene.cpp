@@ -339,6 +339,18 @@ bool GameScene::Start()
 
 	App->physics->CreateRevoluteJoint(flickerLeft, { -0.9f,0 }, circleJointL, { 0, 0 }, 45, true, true);
 	App->physics->CreateRevoluteJoint(flickerRight, { 0.8f,0 }, circleJointR, { 0, 0 }, 45, true, true);
+
+	// Rotatin fishes
+	fish_radius = 55.0f;
+	fish_center = { 196,178 };
+	fish_rect = { 55, 5, 28, 20 };
+	fish_count = 6;
+	fish_step = 0;
+	fish_speed = 50.0f;
+
+	for (int i = 0; i < fish_count; i++) {
+		fishes.add(App->physics->CreateRectangle(0, 0, fish_rect.w, fish_rect.h, 1));
+	}
 	
 	return ret;
 }
@@ -701,6 +713,27 @@ update_status GameScene::Update()
 	ratr_pos.y = PIXEL_TO_METERS(ratr_pos.y);
 
 	movingRatR->body->SetTransform(ratr_pos, 0);
+
+	// Fishes rotation
+	fish_step += fish_speed * App->deltaTime;
+	float factor = (float)M_PI / 180.0f;
+	float spacing = 360 / fish_count;
+
+	p2List_item<PhysBody*>* fish = fishes.getFirst();
+	for (int i = 0; i < fish_count; i++) {
+		b2Vec2 fish_pos;
+
+		fish_pos.x = fish_center.x + fish_radius * cos((fish_step + spacing * i) * factor);
+		fish_pos.y = fish_center.y + fish_radius * sin((fish_step + spacing * i) * factor);
+
+		App->renderer->Blit(sprite, fish_pos.x - fish->data->width, fish_pos.y - fish->data->height, &fish_rect);
+
+		fish_pos.x = PIXEL_TO_METERS(fish_pos.x);
+		fish_pos.y = PIXEL_TO_METERS(fish_pos.y);
+
+		fish->data->body->SetTransform(fish_pos, 0);
+		fish = fish->next;
+	}
 
 	// Draw score
 	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 20);

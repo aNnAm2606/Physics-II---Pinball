@@ -43,6 +43,12 @@ public:
 	iPoint kicker_max_position;
 
 	p2List<PhysBody*> fishes;
+	int fish_count;
+	float fish_radius;
+	float fish_step;
+	float fish_speed;
+	iPoint fish_center;
+	SDL_Rect fish_rect;
 
 	int max_balls;
 
