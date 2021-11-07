@@ -168,8 +168,6 @@ bool GameScene::Start()
 	App->physics->CreateChain(0, 0, background, 48, 1);
 	//Draw map colliders
 	PhysBody* bouncer;
-	bouncer = App->physics->CreateRectangle(199, 199, 56, 9, 1);
-	bouncer->type = PhysBody::Type::BOUNCER;
 	
 	bouncer = App->physics->CreateRectangle(74, 242, 31, 9, 1);
 	bouncer->type = PhysBody::Type::BOUNCER;
