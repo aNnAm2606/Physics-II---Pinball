@@ -736,8 +736,8 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		lifes++;
 		birdoHitCount = 0;
 
-		if (lifes > 9) {
-			lifes = 9;
+		if (lifes > 4) {
+			lifes = 4;
 		}
 	}
 
