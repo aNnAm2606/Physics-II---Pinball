@@ -40,3 +40,8 @@ The score numbers are 100% authentic, created by our group members.
 When player hits 6 birds, he gets an extra ball to play with.
 
  
+Some of the bugs encountered:
+We found a bug in METERS_TO_PIXEL and PIXEL_TO_METERS macros, when we called them sending a value which was an operation, we would get the wrong results, that was because the macro joined a
+multiplication to the operation instead of doing the operation first. We fixed this by just adding parenthesis for the value passed.
+
+Everytime we restarted the level, all objects were duplicated, we fixed this by clearing all physics bodies before starting the game level.
