@@ -43,7 +43,7 @@ update_status GameOver::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		App->fadeToBlack->Fade_To_Black(this, (Module*)App->sceneIntro, 120);
+		App->fadeToBlack->Fade_To_Black(this, (Module*)App->sceneIntro, 0);
 	}
 
 	App->renderer->Blit(texture, 0, 0, NULL);

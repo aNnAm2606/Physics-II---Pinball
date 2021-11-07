@@ -527,15 +527,14 @@ update_status GameScene::Update()
 		ball->body->SetLinearVelocity(b2Vec2_zero);
 		ball->body->SetAngularVelocity(0);
 
-		if (lifes <= 0) {
+		if (lifes < 0) {
 			if (score > bestScore) {
 				bestScore = score;
 			}
 
 			prevScore = score;
 
-			// GO END SCREEN
-			App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 120);
+			App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 0);
 		}
 	}
 

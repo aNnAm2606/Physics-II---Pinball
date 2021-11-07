@@ -61,7 +61,7 @@ update_status SceneIntro::Update()
 	// fade to black to game scene
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameScene, 90);
+		App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameScene, 0);
 	}
 
 	// Put images, example: App->renderer->Blit(Title, 0, 0, NULL);
