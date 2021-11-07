@@ -751,7 +751,7 @@ update_status GameScene::Update()
 	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 20);
 
 	// Instant Loss
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 120);
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 0);
 
 	return UPDATE_CONTINUE;
 }
