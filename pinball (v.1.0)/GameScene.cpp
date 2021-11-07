@@ -49,8 +49,8 @@ bool GameScene::Start()
 	//animations
 	ballAnim.PushBack({ 193,17,23,22 });
 	
-	rightFlickerAnim.PushBack({ 91,314,58,53 });
-	leftFlickerAnim.PushBack({ 27,315,58,53 });
+	rightFlickerAnim.PushBack({ 103,344,83,17 });
+	leftFlickerAnim.PushBack({ 10,344,83,17 });
 
 	ratRAnim.PushBack({ 164,92,47,23 });
 	ratRAnim.PushBack({ 211,89,47,23 });
@@ -586,7 +586,7 @@ update_status GameScene::Update()
 
 	leftFlickerAnim.Update();
 	SDL_Rect flrect = leftFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f, flickerLAngle);
+	App->renderer->Blit(sprite, flickerLX-45, flickerLY-10, &flrect, 2.0f, flickerLAngle);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
@@ -601,7 +601,7 @@ update_status GameScene::Update()
 
 	rightFlickerAnim.Update();
 	SDL_Rect frrect = rightFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, flickerRAngle);
+	App->renderer->Blit(sprite, flickerRX-45 , flickerRY - 6, &frrect, 2.0f, flickerRAngle);
 
 	// Moving platform
 	b2Vec2 platform_pos = movingPlatform->body->GetPosition();
