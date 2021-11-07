@@ -19,6 +19,7 @@ FadeToBlack::~FadeToBlack()
 bool FadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
+	screenRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);

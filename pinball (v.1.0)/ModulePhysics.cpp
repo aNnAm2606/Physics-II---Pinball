@@ -27,6 +27,7 @@ ModulePhysics::~ModulePhysics()
 bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
+	App->physics->Enable();
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
@@ -479,6 +480,19 @@ b2PrismaticJoint* ModulePhysics::CreatePrismaticJoint(PhysBody* A, b2Vec2 anchor
 }
 
 //PhyisBody methods
+PhysBody::PhysBody() : listener(NULL), body(NULL)
+{
+	// Initialize all internal class variables
+	width = height = 0;
+	body = NULL;
+	listener = NULL;
+}
+
+PhysBody::~PhysBody()
+{
+	// Destroy the associated Box2D body
+	body->GetWorld()->DestroyBody(body);
+}
 
 void PhysBody::GetPosition(int& x, int &y) const
 {

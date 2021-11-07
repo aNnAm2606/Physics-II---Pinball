@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Animation.h"
 #include "ModuleRender.h"
+#include "FadeToBlack.h"
 #include "GameScene.h"
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
@@ -704,6 +705,9 @@ update_status GameScene::Update()
 
 	// Draw lifes
 	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 21);
+
+	// Instant Loss
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 120);
 
 	return UPDATE_CONTINUE;
 }
