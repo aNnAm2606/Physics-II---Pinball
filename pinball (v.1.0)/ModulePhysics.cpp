@@ -16,7 +16,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
@@ -566,4 +566,19 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+bool ModulePhysics::CleanStage()
+{
+	LOG("Destroying bodies");
+
+	b2Body* node = world->GetBodyList();
+	while (node)
+	{
+		b2Body* b = node;
+		node = node->GetNext();
+		world->DestroyBody(b);
+	}
+
+	return true;
 }

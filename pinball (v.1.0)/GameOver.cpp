@@ -20,7 +20,7 @@ GameOver::~GameOver()
 // Load assets
 bool GameOver::Start()
 {
-	LOG("Loading background assets");
+	LOG("Loading GameOver screen");
 
 	bool ret = true;
 	texture = App->textures->Load("pinball/end screen.png");

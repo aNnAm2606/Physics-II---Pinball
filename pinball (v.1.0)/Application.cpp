@@ -23,11 +23,10 @@ Application::Application()
 	audio = new ModuleAudio(this);
 	fadeToBlack = new FadeToBlack(this);
 	player = new ModulePlayer(this,false);
-	sceneIntro = new SceneIntro(this, false);
-	gameOver = new GameOver(this, true);
+	sceneIntro = new SceneIntro(this, true);
+	gameOver = new GameOver(this, false);
 	gameScene = new GameScene(this,false);
 	physics = new ModulePhysics(this);
-
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

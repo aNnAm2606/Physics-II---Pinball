@@ -30,7 +30,8 @@ bool GameScene::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->physics->Enable();
+	App->audio->Init();
+	App->physics->Start();
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -360,9 +361,14 @@ bool GameScene::Start()
 bool GameScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
-	App->physics->Disable();
-
+	App->physics->CleanStage();
+	App->textures->Unload(background);
+	App->textures->Unload(sprite);
+	App->textures->Unload(numberSprite);
+	App->textures->Unload(circle);
+	App->textures->Unload(box);
+	App->textures->Unload(rick);
+	App->audio->CleanUp();
 	return true;
 }
 
@@ -732,7 +738,7 @@ update_status GameScene::Update()
 		fish_pos.x = PIXEL_TO_METERS(fish_pos.x);
 		fish_pos.y = PIXEL_TO_METERS(fish_pos.y);
 
-		fish->data->body->SetTransform(fish_pos, 0);
+		fish->data->body->SetTransform(fish_pos, 5);
 		fish = fish->next;
 	}
 

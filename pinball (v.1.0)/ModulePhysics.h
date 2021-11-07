@@ -28,6 +28,7 @@ public:
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 
+
 public:
 	enum class Type {
 		BOUNCER,
@@ -52,6 +53,7 @@ public:
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
+	bool CleanStage();
 
 	PhysBody* CreateCircle(int x, int y, int radius, int dynamic);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, int dynamic);
