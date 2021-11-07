@@ -30,6 +30,8 @@ bool GameScene::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->physics->Enable();
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	//Loading sprites
@@ -108,6 +110,7 @@ bool GameScene::Start()
 	birdoHitCount = 0;
 	score = 0;
 	lifes = 3;
+	max_balls = 4;
 
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 
@@ -337,6 +340,18 @@ bool GameScene::Start()
 
 	App->physics->CreateRevoluteJoint(flickerLeft, { -0.9f,0 }, circleJointL, { 0, 0 }, 45, true, true);
 	App->physics->CreateRevoluteJoint(flickerRight, { 0.8f,0 }, circleJointR, { 0, 0 }, 45, true, true);
+
+	// Rotatin fishes
+	fish_radius = 55.0f;
+	fish_center = { 196,178 };
+	fish_rect = { 55, 5, 28, 20 };
+	fish_count = 6;
+	fish_step = 0;
+	fish_speed = 50.0f;
+
+	for (int i = 0; i < fish_count; i++) {
+		fishes.add(App->physics->CreateRectangle(0, 0, fish_rect.w, fish_rect.h, 1));
+	}
 	
 	return ret;
 }
@@ -345,6 +360,8 @@ bool GameScene::Start()
 bool GameScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
+
+	App->physics->Disable();
 
 	return true;
 }
@@ -566,11 +583,11 @@ update_status GameScene::Update()
 
 	int flickerLX = METERS_TO_PIXELS(flickerLeft->body->GetPosition().x);
 	int flickerLY = METERS_TO_PIXELS(flickerLeft->body->GetPosition().y);
-	double flickerLAngle = DEGTORAD*(flickerLeft->body->GetAngle());
+	double flickerLAngle = RADTODEG*(flickerLeft->body->GetAngle());
 
 	leftFlickerAnim.Update();
 	SDL_Rect flrect = leftFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f,-flickerLAngle);
+	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f, flickerLAngle);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
@@ -581,11 +598,11 @@ update_status GameScene::Update()
 
 	int flickerRX = METERS_TO_PIXELS(flickerRight->body->GetPosition().x);
 	int flickerRY = METERS_TO_PIXELS(flickerRight->body->GetPosition().y);
-	double flickerRAngle = DEGTORAD * (flickerRight->body->GetAngle());
+	double flickerRAngle = RADTODEG * (flickerRight->body->GetAngle());
 
 	rightFlickerAnim.Update();
 	SDL_Rect frrect = rightFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, -flickerRAngle);
+	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, flickerRAngle);
 
 	// Moving platform
 	b2Vec2 platform_pos = movingPlatform->body->GetPosition();
@@ -698,13 +715,34 @@ update_status GameScene::Update()
 
 	movingRatR->body->SetTransform(ratr_pos, 0);
 
+	// Fishes rotation
+	fish_step += fish_speed * App->deltaTime;
+	float factor = (float)M_PI / 180.0f;
+	float spacing = 360 / fish_count;
+
+	p2List_item<PhysBody*>* fish = fishes.getFirst();
+	for (int i = 0; i < fish_count; i++) {
+		b2Vec2 fish_pos;
+
+		fish_pos.x = fish_center.x + fish_radius * cos((fish_step + spacing * i) * factor);
+		fish_pos.y = fish_center.y + fish_radius * sin((fish_step + spacing * i) * factor);
+
+		App->renderer->Blit(sprite, fish_pos.x - fish->data->width, fish_pos.y - fish->data->height, &fish_rect);
+
+		fish_pos.x = PIXEL_TO_METERS(fish_pos.x);
+		fish_pos.y = PIXEL_TO_METERS(fish_pos.y);
+
+		fish->data->body->SetTransform(fish_pos, 0);
+		fish = fish->next;
+	}
+
 	// Draw score
-	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 21);
-	App->renderer->DrawNumber(score, 200, 620, 6, numberSprite, 20, 21);
-	App->renderer->DrawNumber(bestScore, 360, 620, 6, numberSprite, 20, 21);
+	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 20);
+	App->renderer->DrawNumber(score, 200, 620, 6, numberSprite, 20, 20);
+	App->renderer->DrawNumber(bestScore, 360, 620, 6, numberSprite, 20, 20);
 
 	// Draw lifes
-	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 21);
+	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 20);
 
 	// Instant Loss
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 120);
@@ -740,8 +778,8 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		lifes++;
 		birdoHitCount = 0;
 
-		if (lifes > 4) {
-			lifes = 4;
+		if (lifes > max_balls) {
+			lifes = max_balls;
 		}
 	}
 

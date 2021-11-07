@@ -218,7 +218,7 @@ bool ModuleRender::DrawNumber(int number, int x, int y, int digitCount, SDL_Text
 		int d = number / digits;
 
 		rect.x = d * width;
-		App->renderer->Blit(numberTex, x + (width * i), y, &rect);
+		ret = App->renderer->Blit(numberTex, x + (width * i), y, &rect);
 		number = number % digits;
 		digits /= 10;
 	}
