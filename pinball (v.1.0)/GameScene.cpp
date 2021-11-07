@@ -32,7 +32,7 @@ bool GameScene::Start()
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	meow_fx = App->audio->LoadFx("pinball/meow.wav");
 	background = App->textures->Load("pinball/background.png");
 	sprite = App->textures->Load("pinball/sprites.png");
 
@@ -663,7 +663,7 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
-	App->audio->PlayFx(bonus_fx);
+	App->audio->PlayFx(meow_fx);
 
 	if (bodyB->type != PhysBody::Type::NONE) {
 		bounce_ball = true;

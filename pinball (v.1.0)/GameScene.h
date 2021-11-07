@@ -98,7 +98,7 @@ public:
 	Animation ratLAnim;
 	Animation ballAnim;
 
-	uint bonus_fx;
+	uint meow_fx;
 	p2Point<int> ray;
 	bool ray_on;
 };
