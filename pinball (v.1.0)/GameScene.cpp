@@ -31,6 +31,7 @@ bool GameScene::Start()
 	bool ret = true;
 
 	App->physics->Enable();
+	App->audio->Init();
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 

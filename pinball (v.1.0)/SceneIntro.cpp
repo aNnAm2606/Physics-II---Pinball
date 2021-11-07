@@ -21,6 +21,7 @@ bool SceneIntro::Start()
 	LOG("Loading background assets");
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+	App->audio->Init();
 
 	bool ret = true;
 	// Load the textures example: Title = App->textures->Load("");
