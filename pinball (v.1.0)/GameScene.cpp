@@ -109,7 +109,7 @@ bool GameScene::Start()
 	birdoHitCount = 0;
 	score = 0;
 	lifes = 3;
-	max_balls = 8;
+	max_balls = 4;
 
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 
@@ -582,11 +582,11 @@ update_status GameScene::Update()
 
 	int flickerLX = METERS_TO_PIXELS(flickerLeft->body->GetPosition().x);
 	int flickerLY = METERS_TO_PIXELS(flickerLeft->body->GetPosition().y);
-	double flickerLAngle = DEGTORAD*(flickerLeft->body->GetAngle());
+	double flickerLAngle = RADTODEG*(flickerLeft->body->GetAngle());
 
 	leftFlickerAnim.Update();
 	SDL_Rect flrect = leftFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f,-flickerLAngle);
+	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f, flickerLAngle);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
@@ -597,11 +597,11 @@ update_status GameScene::Update()
 
 	int flickerRX = METERS_TO_PIXELS(flickerRight->body->GetPosition().x);
 	int flickerRY = METERS_TO_PIXELS(flickerRight->body->GetPosition().y);
-	double flickerRAngle = DEGTORAD * (flickerRight->body->GetAngle());
+	double flickerRAngle = RADTODEG * (flickerRight->body->GetAngle());
 
 	rightFlickerAnim.Update();
 	SDL_Rect frrect = rightFlickerAnim.GetCurrentFrame();
-	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, -flickerRAngle);
+	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, flickerRAngle);
 
 	// Moving platform
 	b2Vec2 platform_pos = movingPlatform->body->GetPosition();
