@@ -39,12 +39,13 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
-	AddModule(fadeToBlack);
 
 	// Scenes
 	AddModule(sceneIntro);
 	AddModule(gameScene);
 	AddModule(gameOver);
+
+	AddModule(fadeToBlack);
 	
 	// Player
 	AddModule(player);

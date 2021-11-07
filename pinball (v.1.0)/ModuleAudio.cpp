@@ -52,23 +52,28 @@ bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(music != NULL)
+	Clear();
+	Mix_Quit();
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	return true;
+}
+
+void ModuleAudio::Clear()
+{
+	if (music != NULL)
 	{
 		Mix_FreeMusic(music);
 	}
 
 	p2List_item<Mix_Chunk*>* item;
 
-	for(item = fx.getFirst(); item != NULL; item = item->next)
+	for (item = fx.getFirst(); item != NULL; item = item->next)
 	{
 		Mix_FreeChunk(item->data);
 	}
 
 	fx.clear();
 	Mix_CloseAudio();
-	Mix_Quit();
-	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	return true;
 }
 
 // Play a music file

@@ -30,8 +30,7 @@ bool GameScene::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->audio->Init();
-	App->physics->Start();
+	App->physics->Enable();
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -349,7 +348,8 @@ bool GameScene::Start()
 	fish_count = 6;
 	fish_step = 0;
 	fish_speed = 50.0f;
-
+	
+	fishes.clear();
 	for (int i = 0; i < fish_count; i++) {
 		fishes.add(App->physics->CreateRectangle(0, 0, fish_rect.w, fish_rect.h, 1));
 	}
@@ -361,14 +361,14 @@ bool GameScene::Start()
 bool GameScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
-	App->physics->CleanStage();
+	App->physics->Disable();
 	App->textures->Unload(background);
 	App->textures->Unload(sprite);
 	App->textures->Unload(numberSprite);
 	App->textures->Unload(circle);
 	App->textures->Unload(box);
 	App->textures->Unload(rick);
-	App->audio->CleanUp();
+	App->audio->Clear();
 	return true;
 }
 
@@ -534,7 +534,7 @@ update_status GameScene::Update()
 			prevScore = score;
 
 			// GO END SCREEN
-			//App->fadeToBlack->Fade_To_Black(this, (Module*)App->endSCreen, 90);
+			App->fadeToBlack->Fade_To_Black(this, (Module*)App->gameOver, 120);
 		}
 	}
 
