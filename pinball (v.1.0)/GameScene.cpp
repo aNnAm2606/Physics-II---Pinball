@@ -35,9 +35,16 @@ bool GameScene::Start()
 	meow_fx = App->audio->LoadFx("pinball/meow.wav");
 	background = App->textures->Load("pinball/background.png");
 	sprite = App->textures->Load("pinball/sprites.png");
+	music_fx = App->audio->LoadFx("pinball/sound_track.wav");
+
+	//background music
+	App->audio->PlayFx(music_fx);
 
 	//animations
 	ballAnim.PushBack({ 193,17,23,22 });
+	
+	rightFlickerAnim.PushBack({ 91,314,58,53 });
+	leftFlickerAnim.PushBack({ 27,315,58,53 });
 
 	ratRAnim.PushBack({ 164,92,47,23 });
 	ratRAnim.PushBack({ 211,89,47,23 });
@@ -540,10 +547,28 @@ update_status GameScene::Update()
 		flickerLeft->body->ApplyForce({-5,0}, {0,0}, true);
 	}
 
+	int flickerLX = METERS_TO_PIXELS(flickerLeft->body->GetPosition().x);
+	int flickerLY = METERS_TO_PIXELS(flickerLeft->body->GetPosition().y);
+	double flickerLAngle = DEGTORAD*(flickerLeft->body->GetAngle());
+
+	leftFlickerAnim.Update();
+	SDL_Rect flrect = leftFlickerAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, flickerLX-25, flickerLY-20, &flrect, 2.0f,-flickerLAngle);
+
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		flickerRight->body->ApplyForce({ 5,0 }, { 0,0 }, true);
 	}
+
+
+	int flickerRX = METERS_TO_PIXELS(flickerRight->body->GetPosition().x);
+	int flickerRY = METERS_TO_PIXELS(flickerRight->body->GetPosition().y);
+	double flickerRAngle = DEGTORAD * (flickerRight->body->GetAngle());
+
+	rightFlickerAnim.Update();
+	SDL_Rect frrect = rightFlickerAnim.GetCurrentFrame();
+	App->renderer->Blit(sprite, flickerRX - 30, flickerRY - 25, &frrect, 2.0f, -flickerRAngle);
 
 	// Moving platform
 	b2Vec2 platform_pos = movingPlatform->body->GetPosition();

@@ -31,7 +31,7 @@ public:
 	SDL_Texture* cat;
 
 	Animation catAnimation;
-	
+	uint introM_fx;
 };
 
 #endif	// __SCENEINTRO_H__

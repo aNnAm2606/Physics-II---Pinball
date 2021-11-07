@@ -25,6 +25,12 @@ bool SceneIntro::Start()
 
 	bool ret = true;
 	// Load the textures example: Title = App->textures->Load("");
+
+	introM_fx = App->audio->LoadFx("pinball/intro_music.wav");
+
+	//background music
+	App->audio->PlayFx(introM_fx);
+
 	startBackground = App->textures->Load("pinball/start screen.png");
 	cat = App->textures->Load("pinball/catstogether.png");
 

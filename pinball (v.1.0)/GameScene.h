@@ -97,7 +97,10 @@ public:
 	Animation ratRAnim;
 	Animation ratLAnim;
 	Animation ballAnim;
+	Animation leftFlickerAnim;
+	Animation rightFlickerAnim;
 
+	uint music_fx;
 	uint meow_fx;
 	p2Point<int> ray;
 	bool ray_on;
