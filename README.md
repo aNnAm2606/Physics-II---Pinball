@@ -4,13 +4,13 @@ and box2D library.
 
 Author's github links:
 
-Pablo
+Pablo Llorente del Castillo
 https://github.com/Xymaru
 
-Anna
+Anna Metreveli
 https://github.com/aNnAm2606
 
-Miguel
+Miguel Tamaño Garon
 https://github.com/migon25
 
 Controls
@@ -38,7 +38,7 @@ score is achieved.
 All the art was drawn from scratch and animated by our group. (some references mau have been used from the internet)
 The score numbers are 100% authentic, created by our group members.
 When player hits 6 birds, he gets an extra ball to play with.
-
+Game is 100% original, as we have not copied any other game, and did all the background, enemies and bouncers by ourselves.
  
 Some of the bugs encountered:
 We found a bug in METERS_TO_PIXEL and PIXEL_TO_METERS macros, when we called them sending a value which was an operation, we would get the wrong results, that was because the macro joined a
