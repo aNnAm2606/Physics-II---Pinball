@@ -20,14 +20,14 @@ Left arrow key for left flipper and Right arrow key for right flipper.
 
 Down arrow key launching the ball.
 
-F2 key to lose the game
-
 
 Debug Features
+
 F1 draws colliders
+
 F2 key to lose the game
-Github
-Link to the project can be found here: https://github.com/aNnAm2606/Physics-II---Pinball
+
+Github Link to the project can be found here: https://github.com/aNnAm2606/Physics-II---Pinball
 
 
 Special features:
