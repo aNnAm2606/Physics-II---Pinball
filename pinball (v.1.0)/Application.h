@@ -12,6 +12,7 @@ class ModuleAudio;
 class ModulePlayer;
 class GameScene;
 class SceneIntro;
+class GameOver;
 class ModulePhysics;
 class FadeToBlack;
 
@@ -26,6 +27,7 @@ public:
 	ModulePlayer* player;
 	GameScene* gameScene;
 	SceneIntro* sceneIntro;
+	GameOver* gameOver;
 	ModulePhysics* physics;
 	FadeToBlack* fadeToBlack;
 

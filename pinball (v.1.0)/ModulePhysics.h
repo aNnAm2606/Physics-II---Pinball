@@ -20,8 +20,8 @@
 class PhysBody
 {
 public:
-	PhysBody() : listener(NULL), body(NULL)
-	{}
+	PhysBody();
+	~PhysBody();
 
 	void GetPosition(int& x, int &y) const;
 	float GetRotation() const;
