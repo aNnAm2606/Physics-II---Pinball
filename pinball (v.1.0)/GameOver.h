@@ -32,6 +32,7 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
+	uint omaeWaMouShindeiru;
 
 	iPoint Pos;
 

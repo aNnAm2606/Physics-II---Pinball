@@ -25,6 +25,14 @@ bool GameOver::Start()
 	bool ret = true;
 	texture = App->textures->Load("pinball/end screen.png");
 
+	App->audio->Init();
+
+
+	omaeWaMouShindeiru = App->audio->LoadFx("pinball/lose.wav");
+
+	//background music
+	App->audio->PlayFx(omaeWaMouShindeiru);
+
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = 0;
 
