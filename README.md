@@ -23,9 +23,9 @@ Down arrow key launching the ball.
 
 Debug Features
 
-F1 draws colliders
+F1 draws colliders and use mouse joint.
 
-F2 key to lose the game
+F2 key to lose the game.
 
 Github Link to the project can be found here: https://github.com/aNnAm2606/Physics-II---Pinball
 
