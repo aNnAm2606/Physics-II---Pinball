@@ -15,6 +15,9 @@ GameScene::GameScene(Application* app, bool start_enabled) : Module(app, start_e
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
+
+	prevScore = 0;
+	bestScore = 0;
 }
 
 GameScene::~GameScene()
@@ -36,6 +39,7 @@ bool GameScene::Start()
 	background = App->textures->Load("pinball/background.png");
 	sprite = App->textures->Load("pinball/sprites.png");
 	music_fx = App->audio->LoadFx("pinball/sound_track.wav");
+	numberSprite = App->textures->Load("pinball/number_sprites.png");
 
 	//background music
 	App->audio->PlayFx(music_fx);
@@ -102,6 +106,7 @@ bool GameScene::Start()
 
 	birdoHitCount = 0;
 	score = 0;
+	lifes = 3;
 
 	ball = App->physics->CreateCircle(spawn_position.x, spawn_position.y, 10, 0);
 
@@ -496,6 +501,17 @@ update_status GameScene::Update()
 		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn_position.x), PIXEL_TO_METERS(spawn_position.y)), 0);
 		ball->body->SetLinearVelocity(b2Vec2_zero);
 		ball->body->SetAngularVelocity(0);
+
+		if (lifes <= 0) {
+			if (score > bestScore) {
+				bestScore = score;
+			}
+
+			prevScore = score;
+
+			// GO END SCREEN
+			//App->fadeToBlack->Fade_To_Black(this, (Module*)App->endSCreen, 90);
+		}
 	}
 
 	if (bounce_ball) {
@@ -681,6 +697,14 @@ update_status GameScene::Update()
 
 	movingRatR->body->SetTransform(ratr_pos, 0);
 
+	// Draw score
+	App->renderer->DrawNumber(prevScore, 20, 620, 6, numberSprite, 20, 21);
+	App->renderer->DrawNumber(score, 200, 620, 6, numberSprite, 20, 21);
+	App->renderer->DrawNumber(bestScore, 360, 620, 6, numberSprite, 20, 21);
+
+	// Draw lifes
+	App->renderer->DrawNumber(lifes, 440, 540, 1, numberSprite, 20, 21);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -711,6 +735,10 @@ void GameScene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (birdoHitCount == 3) {
 		lifes++;
 		birdoHitCount = 0;
+
+		if (lifes > 9) {
+			lifes = 9;
+		}
 	}
 
 	//ball->body->ApplyForceToCenter(-ball->body->GetLinearVelocity(), true);

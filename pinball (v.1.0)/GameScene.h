@@ -80,6 +80,8 @@ public:
 	b2Vec2 flickerLeft_p;*/
 
 	int birdoHitCount;
+	int prevScore;
+	int bestScore;
 	int score;
 	int lifes;
 
@@ -88,6 +90,7 @@ public:
 	SDL_Texture* rick;
 	SDL_Texture* background;
 	SDL_Texture* sprite;
+	SDL_Texture* numberSprite;
 
 	Animation bigBirdAnim;
 	Animation blackCatAnim;

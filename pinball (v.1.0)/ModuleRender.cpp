@@ -207,3 +207,21 @@ bool ModuleRender::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 
 
 	return ret;
 }
+
+bool ModuleRender::DrawNumber(int number, int x, int y, int digitCount, SDL_Texture * numberTex, int width, int height)
+{
+	bool ret = true;
+
+	SDL_Rect rect = { 0, 0, width, height };
+	int digits = pow(10, digitCount - 1);
+	for (int i = 0; i < digitCount; i++) {
+		int d = number / digits;
+
+		rect.x = d * width;
+		App->renderer->Blit(numberTex, x + (width * i), y, &rect);
+		number = number % digits;
+		digits /= 10;
+	}
+
+	return ret;
+}
